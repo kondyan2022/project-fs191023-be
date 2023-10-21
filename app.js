@@ -18,7 +18,6 @@ app.use(express.static("public"));
 app.use("/users", usersRouter);
 app.use("/products", usersRouter);
 app.use("/exercises", trainingsRouter);
-app.use("/filters", trainingsRouter);
 app.use("/dairy", usersRouter);
 
 app.use((req, res) => {
