@@ -12,7 +12,7 @@ const path = require("path");
 const fs = require("fs/promises");
 const { nanoid } = require("nanoid");
 
-const { SECRET_KEY, BASE_URL } = process.env;
+const { SECRET_KEY, BASE_BASE_URLURL } = process.env;
 
 const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 

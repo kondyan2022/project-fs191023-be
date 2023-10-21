@@ -4,6 +4,8 @@ const cors = require("cors");
 require("dotenv").config();
 
 const usersRouter = require("./routes/users");
+const { getTrainings } = require("./controllers/trainings");
+const { getParts } = require("./controllers/parts");
 
 const app = express();
 
@@ -16,7 +18,8 @@ app.use(express.static("public"));
 
 app.use("/users", usersRouter);
 app.use("/products", usersRouter);
-app.use("/exercises", usersRouter);
+app.use("/exercises", getTrainings);
+app.use("/filters", getParts);
 app.use("/dairy", usersRouter);
 
 app.use((req, res) => {
