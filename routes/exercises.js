@@ -1,10 +1,10 @@
 const express = require("express");
 
 const { authentificate } = require("../middlewares");
-const { getTrainings, getParts } = require("../controllers/exercises");
+const { getExercises, getExerciseGroups } = require("../controllers/exercises");
 
 const router = express.Router();
 
-router.get("/trainings", authentificate, getTrainings);
-router.get("/filters", authentificate, getParts);
+router.get("/", authentificate, getExercises);
+router.get("/execisegroup", authentificate, getExerciseGroups);
 module.exports = router;

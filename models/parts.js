@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 
 const { handleMongooseError } = require("../helpers");
 
-const partsSchema = new Schema(
+const exerciseGroupSchema = new Schema(
   {
     filter: String,
     name: String,
@@ -12,9 +12,9 @@ const partsSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-partsSchema.post("save", handleMongooseError);
+exerciseGroupSchema.post("save", handleMongooseError);
 
-const Parts = model("parts", partsSchema);
+const ExerciseGroup = model("parts", exerciseGroupSchema);
 
 // const registerSchema = Joi.object({
 //   password: Joi.string().min(6).required(),
@@ -36,4 +36,4 @@ const Parts = model("parts", partsSchema);
 //   verifySchema,
 // };
 
-module.exports = { Parts };
+module.exports = { ExerciseGroup };

@@ -18,7 +18,7 @@ const trainingSchema = new Schema(
 
 trainingSchema.post("save", handleMongooseError);
 
-const Trainings = model("trainings", trainingSchema);
+const Exercise = model("trainings", trainingSchema);
 
 // const registerSchema = Joi.object({
 //   password: Joi.string().min(6).required(),
@@ -40,4 +40,4 @@ const Trainings = model("trainings", trainingSchema);
 //   verifySchema,
 // };
 
-module.exports = { Trainings };
+module.exports = { Exercise };
