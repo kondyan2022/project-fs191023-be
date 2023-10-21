@@ -6,5 +6,5 @@ const { getExercises, getExerciseGroups } = require("../controllers/exercises");
 const router = express.Router();
 
 router.get("/", authentificate, getExercises);
-router.get("/execisegroup", authentificate, getExerciseGroups);
+router.get("/exercisegroups", authentificate, getExerciseGroups);
 module.exports = router;

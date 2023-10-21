@@ -14,7 +14,7 @@ const exerciseGroupSchema = new Schema(
 
 exerciseGroupSchema.post("save", handleMongooseError);
 
-const ExerciseGroup = model("parts", exerciseGroupSchema);
+const ExerciseGroup = model("exercisegroup", exerciseGroupSchema);
 
 // const registerSchema = Joi.object({
 //   password: Joi.string().min(6).required(),
