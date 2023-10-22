@@ -1,10 +1,9 @@
 const ctrlWrapper = require('../helpers/ctrlWrapper.js');
-const { Product } = require('../models/Product.js');
-const { ProductList } = require('../models/ProductList.js');
+const { Product } = require('../models/product.js');
+const { ProductList } = require('../models/productList.js');
 
 const getProduct = async (req, res) => {
-  const { _id: owner } = req.user;
-  const product = await Product.find({owner});
+  const product = await Product.find();
   res.status(200).json({
     status: "OK",
     code: 200,

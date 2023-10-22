@@ -5,16 +5,16 @@ const data = require('../resources/products.json')
 const { handleMongooseError } = require('../helpers');
 const productListSchema = new Schema(
   {
-    productCategory: { 
+    name: { 
         type: String,
-        enum: data,
-    }
+        require: true,       
+    },
   },
   { versionKey: false, timestamps: true }
 );
 
 productListSchema.post('save', handleMongooseError);
 
-const ProductList = model("categories", productListSchema);
+const ProductList = model('categories', productListSchema);
 
 module.exports = { ProductList};

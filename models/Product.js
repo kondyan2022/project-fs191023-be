@@ -3,13 +3,28 @@ const { Schema, model } = require("mongoose");
 
 const { handleMongooseError } = require("../helpers");
 
+const groupBloodNotAllowedSchema = new Schema({
+  1: {
+    type: Boolean, 
+    default: false,
+  },
+  2: {
+    type: Boolean, 
+    default: false,
+  },
+  3: {
+    type: Boolean, 
+    default: false,
+  },
+  4: {
+    type: Boolean, 
+    default: false,
+  },
+});
+
+
 const productSchema = new Schema(
   {
-    owner: {
-        type: Schema.Types.ObjectId,
-        ref: 'user', 
-        required: true
-    },
     weight: {
       type: Number
     },
@@ -23,8 +38,8 @@ const productSchema = new Schema(
         type: String,
     },
     groupBloodNotAllowed: {
-        type: Map,
-        of: Boolean,
+        type: groupBloodNotAllowedSchema,
+        required: true,
     },
   },
   { versionKey: false, timestamps: true }
