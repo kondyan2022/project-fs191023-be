@@ -3,43 +3,45 @@ const { Schema, model } = require("mongoose");
 
 const { handleMongooseError } = require("../helpers");
 
-const groupBloodNotAllowedSchema = new Schema({
-  "1": {
-    type: Boolean, 
-    default: false,
+const groupBloodNotAllowedSchema = new Schema(
+  {
+    1: {
+      type: Boolean,
+      default: false,
+    },
+    2: {
+      type: Boolean,
+      default: false,
+    },
+    3: {
+      type: Boolean,
+      default: false,
+    },
+    4: {
+      type: Boolean,
+      default: false,
+    },
   },
-  "2": {
-    type: Boolean, 
-    default: false,
-  },
-  "3": {
-    type: Boolean, 
-    default: false,
-  },
-  "4": {
-    type: Boolean, 
-    default: false,
-  },
-});
-
+  { _id: false }
+);
 
 const productSchema = new Schema(
   {
     weight: {
-      type: Number
+      type: Number,
     },
     calories: {
-      type: Number
+      type: Number,
     },
     category: {
-        type: String
+      type: String,
     },
     title: {
-        type: String,
+      type: String,
     },
     groupBloodNotAllowed: {
-        type: groupBloodNotAllowedSchema,
-        required: true,
+      type: groupBloodNotAllowedSchema,
+      required: true,
     },
   },
   { versionKey: false, timestamps: true }
@@ -49,4 +51,4 @@ productSchema.post("save", handleMongooseError);
 
 const Product = model("products", productSchema);
 
-module.exports = { Product};
+module.exports = { Product };
