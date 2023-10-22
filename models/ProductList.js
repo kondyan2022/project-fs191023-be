@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const data = require('../resources/products.json')
 // const Joi = require("joi");
 
 const { handleMongooseError } = require('../helpers');
