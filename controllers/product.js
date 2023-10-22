@@ -1,6 +1,6 @@
 const ctrlWrapper = require('../helpers/ctrlWrapper.js');
-const { Product } = require('../models/product.js');
-const { ProductList } = require('../models/productList.js');
+const { Product } = require('../models/Product.js');
+const { ProductList } = require('../models/ProductList.js');
 
 const getProduct = async (req, res) => {
   const product = await Product.find();
