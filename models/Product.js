@@ -4,19 +4,19 @@ const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../helpers");
 
 const groupBloodNotAllowedSchema = new Schema({
-  1: {
+  "1": {
     type: Boolean, 
     default: false,
   },
-  2: {
+  "2": {
     type: Boolean, 
     default: false,
   },
-  3: {
+  "3": {
     type: Boolean, 
     default: false,
   },
-  4: {
+  "4": {
     type: Boolean, 
     default: false,
   },
