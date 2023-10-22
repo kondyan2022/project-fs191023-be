@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const usersRouter = require("./routes/users");
 const trainingsRouter = require("./routes/exercises");
+const productRouter = require("./routes/product-router");
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/users", usersRouter);
-app.use("/products", usersRouter);
+app.use("/products", productRouter);
 app.use("/exercises", trainingsRouter);
 app.use("/dairy", usersRouter);
 
