@@ -48,6 +48,10 @@ const profileSchema = new Schema(
       enum: [1, 2, 3, 4, 5],
       required: true,
     },
+    DSN: {
+      type: Number,
+      default: 110,
+    },
   },
   {
     _id: false,
