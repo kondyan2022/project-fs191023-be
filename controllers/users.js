@@ -17,7 +17,7 @@ const { SECRET_KEY, BASE_URL } = process.env;
 const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
 const registration = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
     throw HttpError(409, "Email in use");
@@ -52,13 +52,13 @@ const registration = async (req, res) => {
 
   res.status(201).json({
     token,
-    user: { email: newUser.email, avatarURL },
+    user: { name: newUser.name, email: newUser.email, avatarURL },
   });
 };
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  let user = await User.findOne({ email });
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
   }
@@ -73,10 +73,19 @@ const login = async (req, res) => {
   const payload = { id: user._id };
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-  await User.findByIdAndUpdate(user._id, { token });
+  user = await User.findByIdAndUpdate(
+    user._id,
+    { token },
+    {
+      new: true,
+      select:
+        "-createdAt -updatedAt -password -token -verify -verificationToken",
+    }
+  );
   res.json({
     token,
-    user: { email: user.email, avatarURL: user.avatarURL },
+    // user: { email: user.email, avatarURL: user.avatarURL },
+    user,
   });
 };
 
@@ -131,8 +140,11 @@ const logout = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { _id } = req.user;
-  const user = await User.findByIdAndUpdate(_id, req.body, { new: true });
-  res.json({ email: user.email });
+  const user = await User.findByIdAndUpdate(_id, req.body, {
+    new: true,
+    select: "-createdAt -updatedAt",
+  });
+  res.json(user);
 };
 
 const updateAvatar = async (req, res, next) => {
@@ -151,6 +163,15 @@ const updateAvatar = async (req, res, next) => {
   res.json({ avatarURL });
 };
 
+const updateProfile = async (req, res) => {
+  const { _id } = req.user;
+  const user = await User.findByIdAndUpdate(_id, req.body, {
+    new: true,
+    select: "-createdAt -updatedAt -password -token -verify -verificationToken",
+  });
+  res.json(user);
+};
+
 module.exports = {
   registration: ctrlWrapper(registration),
   login: ctrlWrapper(login),
@@ -160,4 +181,5 @@ module.exports = {
   logout: ctrlWrapper(logout),
   updateUser: ctrlWrapper(updateUser),
   updateAvatar: ctrlWrapper(updateAvatar),
+  updateProfile: ctrlWrapper(updateProfile),
 };
