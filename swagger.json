@@ -1,0 +1,117 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "File Upload API",
+      "version": "1.0.0",
+      "description": "API for Back-end in the their project"
+    },
+    
+    "paths": {
+      "/exercises/": {
+        "get": {
+          "summary": "Give you list of trainings",
+          "parameters": [
+            {
+              "name": "getExercises",
+              "in": "path",
+              "description": "Give you list of trainings",
+              "schema": {
+                "type": "array"
+              }
+            }
+          ],     "responses": {
+          "200": {
+            "description": "You are got exercises list",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                      "bodyPart": {
+                        "type": "string",
+                        "example": "Legs"
+                      },
+                      "equipment": {
+                        "type": "string",
+                        "example": "Dumbbells"
+                      },
+                      "gifUrl": {
+                        "type": "string",
+                        "example": "https://example.com/exercise.gif"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Squat"
+                      },
+                      "target": {
+                        "type": "string",
+                        "example": "Strength"
+                      },
+                      "burnedCalories": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 250.5
+                      },
+                      "time": {
+                        "type": "number",
+                        "format": "int32",
+                        "example": 30
+                      }
+                    }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There won't be a list of exercises, something went wrong."
+          }
+        
+        }
+      }
+    }, "/exercises/exercisegroups": {
+        "get": {
+          "summary": "Give you list of trainings",
+          "parameters": [
+            {
+              "name": "getExercisesGroups",
+              "in": "path",
+              "description": "Give you list of filters",
+              "schema": {
+                "type": "array"
+              }
+            }
+          ],     "responses": {
+          "200": {
+            "description": "You are got filters list",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                      "filter": {
+                        "type": "string",
+                        "example": "Legs"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Aboba"
+                      },
+                      "imgURL": {
+                        "type": "string",
+                        "example": "https://example.com/exercise.jpg"
+                      }
+                    }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There won't be a list of exercises, something went wrong."
+          }
+        
+        }
+      }
+    }
+  }
+}
+  
