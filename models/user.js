@@ -22,13 +22,15 @@ const profileSchema = new Schema(
     },
     birthday: {
       type: Date,
-      // validate: {
-      //   validator: function (v) {
-      //     console.log("Check birthdate");
-      //     return true;
-      //   },
-      //   message: (props) => `${props.value} is not valid`,
-      // },
+      validate: {
+        validator: function (v) {
+          const checkDate = new Date(v);
+          checkDate.setFullYear(checkDate.getFullYear() + 18);
+          const nowDate = new Date();
+          return nowDate >= checkDate;
+        },
+        message: (props) => `${props.value} is not valid`,
+      },
       required: true,
     },
     blood: {
@@ -68,16 +70,6 @@ const profileSchema = new Schema(
     },
   }
 );
-
-// function checkBirthday(birthday) {
-//   {
-//     console.log("Test value", birthday);
-//     const checkDate = birthday.setFullYear(birthday.getFullYear() + 18);
-//     const nowDate = new Date();
-//     // return nowDate >= checkDate;
-//     return false;
-//   }
-// }
 
 const userSchema = new Schema(
   {
@@ -120,6 +112,26 @@ const userSchema = new Schema(
 
 userSchema.post("save", handleMongooseError);
 
+userSchema.pre("findOneAndUpdate", function (next) {
+  const { profile } = this.getUpdate();
+  console.log(profile);
+  if (profile) {
+    const birthday = new Date(profile.birthday);
+    birthday.setFullYear(birthday.getFullYear() + 18);
+    const nowDate = new Date();
+    if (nowDate < birthday) {
+      return next(
+        new Error(
+          `Age must be at least 18 years old, got birth date ${new Date(
+            profile.birthday
+          ).toLocaleDateString()}`
+        )
+      );
+    }
+  }
+  next();
+});
+
 const User = model("user", userSchema);
 
 const registerSchema = Joi.object({
@@ -148,10 +160,15 @@ const updateSchema = Joi.object({
     birthday: Joi.date()
       .required()
       .custom((value, helper) => {
-        const checkDate = value.setFullYear(value.getFullYear() + 18);
+        const checkDate = new Date(value);
+        checkDate.setFullYear(value.getFullYear() + 18);
         const nowDate = new Date();
         if (nowDate < checkDate) {
-          return helper.message(`Must be at least 18, got ${value}!`);
+          return helper.message(
+            `Age must be at least 18 years old, got birth date ${new Date(
+              value
+            ).toLocaleDateString()}`
+          );
         }
         return true;
       }),
