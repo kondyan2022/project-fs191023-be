@@ -1,10 +1,11 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "title": "File Upload API",
+      "title": "PowerPulse API",
       "version": "1.0.0",
-      "description": "API for Back-end in the their project"
+      "description": "Back-end for PowerPulse's team"
     },
+    "consumes":["application/json","multipart/form-data"],
     
     "paths": {
       "/exercises/": {
@@ -70,7 +71,7 @@
       }
     }, "/exercises/exercisegroups": {
         "get": {
-          "summary": "Give you list of trainings",
+          "summary": "Give you list of filters",
           "parameters": [
             {
               "name": "getExercisesGroups",
