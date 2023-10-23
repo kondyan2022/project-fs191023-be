@@ -103,3 +103,6 @@ const diarySchema = new Schema(
 );
 
 diarySchema.post("save", handleMongooseError);
+const Diary = model("diary", diarySchema);
+
+module.exports = { Diary };
