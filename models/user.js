@@ -79,13 +79,13 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      validate: {
-        validator: function (v) {
-          console.log("Check name", v);
-          return v.length > 4;
-        },
-        message: (props) => `${props.value} is not valid`,
-      },
+      // validate: {
+      //   validator: function (v) {
+      //     console.log("Check name", v);
+      //     return v.length > 4;
+      //   },
+      //   message: (props) => `${props.value} is not valid`,
+      // },
       required: [true, "Set name for user"],
     },
     password: {
