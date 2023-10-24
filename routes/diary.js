@@ -5,5 +5,6 @@ const ctrl = require("../controllers/diary");
 const router = express.Router();
 
 router.post("/exercise", authentificate, ctrl.postExerciseToDiary);
+router.post("/product", authentificate, ctrl.postProductsToDiary);
 
 module.exports = router;

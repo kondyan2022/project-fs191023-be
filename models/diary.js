@@ -17,7 +17,7 @@ const productItemSchema = new Schema({
     min: 1,
     required: true,
   },
-  calories: {
+  consumeCalories: {
     min: 1,
     type: Number,
     required: true,
@@ -90,12 +90,17 @@ const diarySchema = new Schema(
       },
       consumedCalories: {
         get() {
-          return this.products.reduce((acc, { calories }) => acc + calories, 0);
+          return this.products.reduce(
+            (acc, { consumeCalories }) => acc + consumeCalories,
+            0
+          );
         },
       },
       doneExercisesTime: {
         get() {
-          return this.exercises.reduce((acc, { time }) => acc + time, 0);
+          return Math.round(
+            this.exercises.reduce((acc, { time }) => acc + time, 0) / 60
+          );
         },
       },
     },
