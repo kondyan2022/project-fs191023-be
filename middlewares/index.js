@@ -5,6 +5,7 @@ const upload = require("./upload");
 const resizeAvatar = require("./resizeAvatar");
 const isSingleFileExist = require("./isSingleFileExist");
 const authentificate = require("./authentificate");
+const validateDate = require("./validateDate");
 
 module.exports = {
   validateBody,
@@ -14,4 +15,5 @@ module.exports = {
   resizeAvatar,
   isSingleFileExist,
   authentificate,
+  validateDate,
 };
