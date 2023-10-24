@@ -1,11 +1,31 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "title": "PowerPulse API",
+      "title": "Power Pulse API",
       "version": "1.0.0",
-      "description": "Back-end for PowerPulse's team"
+      "description": "Back-end for Power Pulse's team"
     },
     "consumes":["application/json","multipart/form-data"],
+    "produces": ["application/json"],
+    "servers": [{"url": "http://localhost:3000"}],
+    "tags": [
+      {
+        "name": "Auth",
+        "description": "Authorization endpoints"
+      },
+      {
+        "name": "Products",
+        "description": "Products endpoints"
+      },
+      {
+        "name": "Exercises",
+        "description": "Exercises endpoints"
+      },
+      {
+        "name": "Diary",
+        "description": "Diary endpoints"
+      }      
+    ],
     
     "paths": {
       "/exercises/": {
@@ -25,7 +45,7 @@
             "description": "You are got exercises list",
             "content": {
               "application/json": {
-                "schema": {
+                  "schema": {
                     "type": "object",
                     "properties": {
                       "bodyPart": {
@@ -59,7 +79,7 @@
                         "example": 30
                       }
                     }
-                }
+                  }
               }
             }
           },
@@ -112,7 +132,109 @@
         
         }
       }
+    },
+    "/products/": {
+      "get": {
+        "summary": "Give you products",
+        "parameters": [
+          {
+            "name": "getProducts",
+            "in": "path",
+            "description": "Give you products",
+            "schema": {
+              "type": "array"
+            }
+          }
+        ],     
+        "responses": {
+          "200": {
+            "description": "You get products",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                      "weight": {
+                        "type": "number",
+                        "example": "100"
+                      },
+                      "calories": {
+                        "type": "number",
+                        "example": "300"
+                      },
+                      "category": {
+                        "type": "string",
+                        "example": "vegetables and herbs"
+                      },
+                      "title": {
+                        "type": "string",
+                        "example": "Salads Belaya Dacha Delicate root"
+                      },
+                      "groupBloodNotAllowed": {
+                        "1": {
+                          "type": "boolean",
+                          "example": "true"
+                        },
+                        "2": {
+                          "type": "boolean",
+                          "example": "true"
+                        },
+                        "3": {
+                          "type": "boolean",
+                          "example": "true"
+                        },
+                        "4": {
+                          "type": "boolean",
+                          "example": "true"
+                        }
+                      }
+                    }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There aren't products, something went wrong."
+          }    
+        }
+      }
+  },
+  "/products/productsList": {
+    "get": {
+      "summary": "Give you list of products",
+      "parameters": [
+        {
+          "name": "getProductsList",
+          "in": "path",
+          "description": "Give you list of products",
+          "schema": {
+            "type": "array"
+          }
+        }
+      ],     
+      "responses": {
+        "200": {
+          "description": "You get a list of products",
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "berries"
+                    }
+                  }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "There won't be a list of products, something went wrong."
+        }
+      }
     }
   }
+}
 }
   
