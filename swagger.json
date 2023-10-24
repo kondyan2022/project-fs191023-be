@@ -132,7 +132,69 @@
         
         }
       }
-    },
+    },    
+    "/diary/:date": {
+      "get": {
+        "summary": "Request for get all products and exercises by selected date",
+        "description": "For getting response you must write in url your date in format monthdayyear. For example:  https://power-plus-service.onrender.com/diary/10242023",   "responses": {
+        "200": {
+          "description": "You are got exercises list",
+          "content": {
+            "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "owner": {
+                      "type": "string",
+                      "example": "65380df23cd01b5b25fdc778"
+                    },
+                    "date": {
+                      "type": "string",
+                      "example": "10242023"
+                    },
+                    "DSN": {
+                      "type": "number",
+                      "example": 110
+                    },
+                    "BMR": {
+                      "type": "number",
+                      "example": 4823
+                    },
+                    "products": {
+                      "type": "array",
+                      "example": []
+                    },
+                    "exercises": {
+                      "type": "array",
+                      "example": []
+                    },
+                    "burnedCalories": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 300
+                    }, 
+                    "consumedCalories": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 130
+                    }, 
+                    "doneExercisesTime": {
+                      "type": "number",
+                      "format": "int32",
+                      "example": 30
+                    }
+                  }
+                }
+            }
+          }
+        },
+        "404": {
+          "description": "Something has gone wrong. Check if the date is entered and if you are making the request correctly."
+        }
+      
+      }
+    }
+  },
     "/products/": {
       "get": {
         "summary": "Give you products",

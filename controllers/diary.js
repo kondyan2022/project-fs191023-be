@@ -19,7 +19,7 @@ const postExerciseToDiary = async (req, res, next) => {
     diaryItem = await Diary.create({ date, owner: _id, DSN, BMR });
   }
   const { bodyPart, equipment, name, target } = await Exercise.findById(
-    exerciseId
+    exerciseId,
   );
   diaryItem = await Diary.findByIdAndUpdate(
     diaryItem._id,
@@ -28,7 +28,7 @@ const postExerciseToDiary = async (req, res, next) => {
         exercises: { bodyPart, equipment, name, target, time, burnedCalories },
       },
     },
-    { new: true }
+    { new: true },
   );
 
   res.json(diaryItem);
@@ -50,7 +50,7 @@ const postProductsToDiary = async (req, res, next) => {
     diaryItem = await Diary.create({ date, owner: _id, DSN, BMR });
   }
   const { title, category, groupBloodNotAllowed } = await Product.findById(
-    productId
+    productId,
   );
 
   diaryItem = await Diary.findByIdAndUpdate(
@@ -66,10 +66,32 @@ const postProductsToDiary = async (req, res, next) => {
         },
       },
     },
-    { new: true }
+    { new: true },
   );
 
   res.json(diaryItem);
 };
+const diaryByDate = async (req, res) => {
+  const {
+    _id,
+    profile: { DSN, BMR },
+  } = req.user;
+  const { date } = req.params;
 
-module.exports = { postExerciseToDiary, postProductsToDiary };
+  let diaryItem = await Diary.findOne({ date, owner: _id });
+  if (!diaryItem) {
+    diaryItem = {
+      owner: _id,
+      date,
+      DSN,
+      BMR,
+      products: [],
+      exercises: [],
+      burnedCalories: 0,
+      consumedCalories: 0,
+      doneExercisesTime: 0,
+    };
+  }
+  res.json(diaryItem);
+};
+module.exports = { postExerciseToDiary, postProductsToDiary, diaryByDate };
