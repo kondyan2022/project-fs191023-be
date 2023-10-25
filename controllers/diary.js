@@ -71,6 +71,8 @@ const postProductsToDiary = async (req, res, next) => {
 
   res.json(diaryItem);
 };
+
+
 const diaryByDate = async (req, res) => {
   const {
     _id,
