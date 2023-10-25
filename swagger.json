@@ -29,7 +29,6 @@
       "description": "Diary endpoints"
     }
   ],
-
   "paths": {
     "/users/register": {
       "post": {
@@ -246,10 +245,17 @@
         }
       }
     },
-    "/diary/:date": {
+    "/diary/{date}": {
       "get": {
         "summary": "Request for get all products and exercises by selected date",
-        "description": "For getting response you must write in url your date in format monthdayyear. For example:  https://power-plus-service.onrender.com/diary/10242023",
+        "description": "For getting response you must write your date in the URL in the format monthdayyear. For example: https://power-plus-service.onrender.com/diary/10242023",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "description": "Date in the format monthdayyear (e.g., 10242023)"
+          }
+        ],
         "responses": {
           "200": {
             "description": "You are got exercises list",
@@ -348,21 +354,24 @@
                         "example": "Salads Belaya Dacha Delicate root"
                       },
                       "groupBloodNotAllowed": {
-                        "1": {
-                          "type": "boolean",
-                          "example": "true"
-                        },
-                        "2": {
-                          "type": "boolean",
-                          "example": "true"
-                        },
-                        "3": {
-                          "type": "boolean",
-                          "example": "true"
-                        },
-                        "4": {
-                          "type": "boolean",
-                          "example": "true"
+                        "type": "object",
+                        "properties": {
+                          "1": {
+                            "type": "boolean",
+                            "example": "true"
+                          },
+                          "2": {
+                            "type": "boolean",
+                            "example": "true"
+                          },
+                          "3": {
+                            "type": "boolean",
+                            "example": "true"
+                          },
+                          "4": {
+                            "type": "boolean",
+                            "example": "true"
+                          }
                         }
                       }
                     }
@@ -438,38 +447,71 @@
             "schema": {
               "type": "object",
               "properties": {
-                "height": {
-                  "type": "integer",
-                  "format": "int32",
-                  "example": 149
-                },
-                "currentWeight": {
-                  "type": "number",
-                  "format": "float",
-                  "example": 34
-                },
-                "desiredWeight": {
-                  "type": "number",
-                  "format": "float",
-                  "example": 60
-                },
-                "birthday": {
+                "_id": {
                   "type": "string",
-                  "example": "20/12/1990"
+                  "example": "653800e44af33653569e9d93"
                 },
-                "blood": {
-                  "type": "integer",
-                  "format": "int32",
-                  "example": 4
-                },
-                "sex": {
+                "name": {
                   "type": "string",
-                  "example": "male"
+                  "example": "www"
                 },
-                "levelActivity": {
-                  "type": "integer",
-                  "format": "int32",
-                  "example": 1
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "example": "karavang@gmail.com"
+                },
+                "avatarURL": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "//www.gravatar.com/avatar/e620fe25eac4f8d8efc707f27f5523d7"
+                },
+                "profile": {
+                  "type": "object",
+                  "properties": {
+                    "height": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 170
+                    },
+                    "currentWeight": {
+                      "type": "number",
+                      "format": "float",
+                      "example": 65
+                    },
+                    "desiredWeight": {
+                      "type": "number",
+                      "format": "float",
+                      "example": 70
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2000-12-20T00:00:00.000Z"
+                    },
+                    "blood": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 4
+                    },
+                    "sex": {
+                      "type": "string",
+                      "enum": ["male", "female"],
+                      "example": "male"
+                    },
+                    "levelActivity": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 3
+                    },
+                    "DSN": {
+                      "type": "integer",
+                      "example": 110
+                    },
+                    "BMR": {
+                      "type": "integer",
+                      "example": 4823
+                    }
+                  }
                 }
               }
             }
@@ -479,65 +521,65 @@
           "200": {
             "description": "User profile updated successfully"
           }
-        },
-        "/users/avatars": {
-          "patch": {
-            "summary": "Upload user avatar",
-            "consumes": ["multipart/form-data"],
-            "produces": ["application/json"],
-            "parameters": [
-              {
-                "in": "header",
-                "name": "Authorization",
-                "type": "string",
-                "default": "Bearer Token",
-                "description": "Authorization header with Bearer Token",
-                "required": true
-              },
-              {
-                "in": "formData",
-                "name": "avatar",
-                "type": "file",
-                "description": "User avatar file to upload",
-                "required": true
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "Avatar uploaded successfully"
-              }
-            }
+        }
+      }
+    },
+    "/users/avatars": {
+      "patch": {
+        "summary": "Upload user avatar",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "default": "Bearer Token",
+            "description": "Authorization header with Bearer Token",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "avatar",
+            "type": "file",
+            "description": "User avatar file to upload",
+            "required": true
           }
-        },
-        "/avatars/:avatarFileName": {
-          "get": {
-            "summary": "Get user avatar",
-            "produces": ["image/jpeg", "image/png", "image/gif"],
-            "parameters": [
-              {
-                "in": "header",
-                "name": "Authorization",
-                "type": "string",
-                "default": "Bearer Token",
-                "description": "Authorization header with Bearer Token",
-                "required": true
-              },
-              {
-                "in": "path",
-                "name": "avatarFileName",
-                "type": "string",
-                "description": "The filename of the avatar to retrieve",
-                "required": true
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "Avatar retrieved successfully",
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
+        ],
+        "responses": {
+          "200": {
+            "description": "Avatar uploaded successfully"
+          }
+        }
+      }
+    },
+    "/avatars/{avatarFileName}": {
+      "get": {
+        "summary": "Get user avatar",
+        "produces": ["image/jpeg", "image/png", "image/gif"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "default": "Bearer Token",
+            "description": "Authorization header with Bearer Token",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "avatarFileName",
+            "type": "string",
+            "description": "The filename of the avatar to retrieve",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Avatar retrieved successfully",
+            "schema": {
+              "type": "string",
+              "format": "binary"
             }
           }
         }
