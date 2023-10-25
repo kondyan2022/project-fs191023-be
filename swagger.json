@@ -41,6 +41,10 @@
             "schema": {
               "type": "object",
               "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "One"
+                },
                 "email": {
                   "type": "string",
                   "example": "one3@one.com"
