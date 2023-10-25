@@ -410,7 +410,74 @@
         }
       }
     }
+  },
+  "/users/profile": {
+    "put": {
+      "summary": "Update user profile",
+      "consumes": ["application/json"],
+      "produces": ["application/json"],
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Authorization",
+          "type": "string",
+          "default": "Bearer Token",
+          "description": "Authorization header with Bearer Token",
+          "required": true
+        },
+        {
+          "in": "body",
+          "name": "profileData",
+          "description": "User profile data to update",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "height": {
+                "type": "integer",
+                "format": "int32",
+                "example": 149
+              },
+              "currentWeight": {
+                "type": "number",
+                "format": "float",
+                "example": 34
+              },
+              "desiredWeight": {
+                "type": "number",
+                "format": "float",
+                "example": 60
+              },
+              "birthday": {
+                "type": "string",
+                "example": "20/12/1990"
+              },
+              "blood": {
+                "type": "integer",
+                "format": "int32",
+                "example": 4
+              },
+              "sex": {
+                "type": "string",
+                "example": "male"
+              },
+              "levelActivity": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              }
+            }
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "User profile updated successfully"
+        }
+      }
+    }
   }
 }
 }
+
   
