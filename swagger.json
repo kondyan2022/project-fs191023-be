@@ -27,7 +27,105 @@
       }      
     ],
     
-    "paths": {
+    "paths": {"/users/register": {
+      "post": {
+        "summary": "Register a new user",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User registration data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "one3@one.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Login with user credentials",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User login data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "one3@one.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "summary": "Logout the user",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User data for logout",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "one3@one.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged out successfully"
+          }
+        }
+      }
+    },
       "/exercises/": {
         "get": {
           "summary": "Give you list of trainings",
@@ -45,7 +143,9 @@
             "description": "You are got exercises list",
             "content": {
               "application/json": {
-                  "schema": {
+                "schema": {
+                  "type": "array",
+                  "items": {
                     "type": "object",
                     "properties": {
                       "bodyPart": {
@@ -80,6 +180,8 @@
                       }
                     }
                   }
+                }
+                
               }
             }
           },
@@ -106,7 +208,9 @@
             "description": "You are got filters list",
             "content": {
               "application/json": {
-                "schema": {
+                "schema": { 
+                "type": "array",
+                "items": {
                     "type": "object",
                     "properties": {
                       "filter": {
@@ -123,6 +227,7 @@
                       }
                     }
                 }
+              }
               }
             }
           },
@@ -213,7 +318,8 @@
             "description": "You get products",
             "content": {
               "application/json": {
-                "schema": {
+                "schema": { "type": "array",
+                  "items": {
                     "type": "object",
                     "properties": {
                       "weight": {
@@ -251,6 +357,7 @@
                         }
                       }
                     }
+                  }
                 }
               }
             }
@@ -261,7 +368,7 @@
         }
       }
   },
-  "/products/productsList": {
+  "/products/categories": {
     "get": {
       "summary": "Give you list of products",
       "parameters": [
@@ -280,14 +387,17 @@
           "content": {
             "application/json": {
               "schema": {
+                "type": "array",
+                "items": {
                   "type": "object",
                   "properties": {
                     "name": {
                       "type": "string",
-                      "example": "berries"
+                      "example": "alcoholic drinks"
                     }
                   }
               }
+            }
             }
           }
         },
