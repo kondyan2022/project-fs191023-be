@@ -27,7 +27,109 @@
       }      
     ],
     
-    "paths": {
+    "paths": {"/users/register": {
+      "post": {
+        "summary": "Register a new user",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User registration data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "One"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "one3@one.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Login with user credentials",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User login data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "one3@one.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "summary": "Logout the user",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User data for logout",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "one3@one.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged out successfully"
+          }
+        }
+      }
+    },
       "/exercises/": {
         "get": {
           "summary": "Give you list of trainings",
@@ -45,7 +147,9 @@
             "description": "You are got exercises list",
             "content": {
               "application/json": {
-                  "schema": {
+                "schema": {
+                  "type": "array",
+                  "items": {
                     "type": "object",
                     "properties": {
                       "bodyPart": {
@@ -80,6 +184,8 @@
                       }
                     }
                   }
+                }
+                
               }
             }
           },
@@ -106,7 +212,9 @@
             "description": "You are got filters list",
             "content": {
               "application/json": {
-                "schema": {
+                "schema": { 
+                "type": "array",
+                "items": {
                     "type": "object",
                     "properties": {
                       "filter": {
@@ -123,6 +231,7 @@
                       }
                     }
                 }
+              }
               }
             }
           },
@@ -213,7 +322,8 @@
             "description": "You get products",
             "content": {
               "application/json": {
-                "schema": {
+                "schema": { "type": "array",
+                  "items": {
                     "type": "object",
                     "properties": {
                       "weight": {
@@ -251,6 +361,7 @@
                         }
                       }
                     }
+                  }
                 }
               }
             }
@@ -261,7 +372,7 @@
         }
       }
   },
-  "/products/productsList": {
+  "/products/categories": {
     "get": {
       "summary": "Give you list of products",
       "parameters": [
@@ -280,14 +391,17 @@
           "content": {
             "application/json": {
               "schema": {
+                "type": "array",
+                "items": {
                   "type": "object",
                   "properties": {
                     "name": {
                       "type": "string",
-                      "example": "berries"
+                      "example": "alcoholic drinks"
                     }
                   }
               }
+            }
             }
           }
         },
@@ -296,7 +410,74 @@
         }
       }
     }
+  },
+  "/users/profile": {
+    "put": {
+      "summary": "Update user profile",
+      "consumes": ["application/json"],
+      "produces": ["application/json"],
+      "parameters": [
+        {
+          "in": "header",
+          "name": "Authorization",
+          "type": "string",
+          "default": "Bearer Token",
+          "description": "Authorization header with Bearer Token",
+          "required": true
+        },
+        {
+          "in": "body",
+          "name": "profileData",
+          "description": "User profile data to update",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "height": {
+                "type": "integer",
+                "format": "int32",
+                "example": 149
+              },
+              "currentWeight": {
+                "type": "number",
+                "format": "float",
+                "example": 34
+              },
+              "desiredWeight": {
+                "type": "number",
+                "format": "float",
+                "example": 60
+              },
+              "birthday": {
+                "type": "string",
+                "example": "20/12/1990"
+              },
+              "blood": {
+                "type": "integer",
+                "format": "int32",
+                "example": 4
+              },
+              "sex": {
+                "type": "string",
+                "example": "male"
+              },
+              "levelActivity": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              }
+            }
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "User profile updated successfully"
+        }
+      }
+    }
   }
 }
 }
+
   
