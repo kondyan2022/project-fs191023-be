@@ -1,33 +1,34 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Power Pulse API",
-      "version": "1.0.0",
-      "description": "Back-end for Power Pulse's team"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Power Pulse API",
+    "version": "1.0.0",
+    "description": "Back-end for Power Pulse's team"
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:3000" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
     },
-    "consumes":["application/json","multipart/form-data"],
-    "produces": ["application/json"],
-    "servers": [{"url": "http://localhost:3000"}],
-    "tags": [
-      {
-        "name": "Auth",
-        "description": "Authorization endpoints"
-      },
-      {
-        "name": "Products",
-        "description": "Products endpoints"
-      },
-      {
-        "name": "Exercises",
-        "description": "Exercises endpoints"
-      },
-      {
-        "name": "Diary",
-        "description": "Diary endpoints"
-      }      
-    ],
-    
-    "paths": {"/users/register": {
+    {
+      "name": "Products",
+      "description": "Products endpoints"
+    },
+    {
+      "name": "Exercises",
+      "description": "Exercises endpoints"
+    },
+    {
+      "name": "Diary",
+      "description": "Diary endpoints"
+    }
+  ],
+
+  "paths": {
+    "/users/register": {
       "post": {
         "summary": "Register a new user",
         "consumes": ["application/json"],
@@ -130,19 +131,20 @@
         }
       }
     },
-      "/exercises/": {
-        "get": {
-          "summary": "Give you list of trainings",
-          "parameters": [
-            {
-              "name": "getExercises",
-              "in": "path",
-              "description": "Give you list of trainings",
-              "schema": {
-                "type": "array"
-              }
+    "/exercises/": {
+      "get": {
+        "summary": "Give you list of trainings",
+        "parameters": [
+          {
+            "name": "getExercises",
+            "in": "path",
+            "description": "Give you list of trainings",
+            "schema": {
+              "type": "array"
             }
-          ],     "responses": {
+          }
+        ],
+        "responses": {
           "200": {
             "description": "You are got exercises list",
             "content": {
@@ -185,36 +187,36 @@
                     }
                   }
                 }
-                
               }
             }
           },
           "404": {
             "description": "There won't be a list of exercises, something went wrong."
           }
-        
         }
       }
-    }, "/exercises/exercisegroups": {
-        "get": {
-          "summary": "Give you list of filters",
-          "parameters": [
-            {
-              "name": "getExercisesGroups",
-              "in": "path",
-              "description": "Give you list of filters",
-              "schema": {
-                "type": "array"
-              }
+    },
+    "/exercises/exercisegroups": {
+      "get": {
+        "summary": "Give you list of filters",
+        "parameters": [
+          {
+            "name": "getExercisesGroups",
+            "in": "path",
+            "description": "Give you list of filters",
+            "schema": {
+              "type": "array"
             }
-          ],     "responses": {
+          }
+        ],
+        "responses": {
           "200": {
             "description": "You are got filters list",
             "content": {
               "application/json": {
-                "schema": { 
-                "type": "array",
-                "items": {
+                "schema": {
+                  "type": "array",
+                  "items": {
                     "type": "object",
                     "properties": {
                       "filter": {
@@ -230,26 +232,26 @@
                         "example": "https://example.com/exercise.jpg"
                       }
                     }
+                  }
                 }
-              }
               }
             }
           },
           "404": {
             "description": "There won't be a list of exercises, something went wrong."
           }
-        
         }
       }
-    },    
+    },
     "/diary/:date": {
       "get": {
         "summary": "Request for get all products and exercises by selected date",
-        "description": "For getting response you must write in url your date in format monthdayyear. For example:  https://power-plus-service.onrender.com/diary/10242023",   "responses": {
-        "200": {
-          "description": "You are got exercises list",
-          "content": {
-            "application/json": {
+        "description": "For getting response you must write in url your date in format monthdayyear. For example:  https://power-plus-service.onrender.com/diary/10242023",
+        "responses": {
+          "200": {
+            "description": "You are got exercises list",
+            "content": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -281,12 +283,12 @@
                       "type": "number",
                       "format": "int32",
                       "example": 300
-                    }, 
+                    },
                     "consumedCalories": {
                       "type": "number",
                       "format": "int32",
                       "example": 130
-                    }, 
+                    },
                     "doneExercisesTime": {
                       "type": "number",
                       "format": "int32",
@@ -294,16 +296,15 @@
                     }
                   }
                 }
+              }
             }
+          },
+          "404": {
+            "description": "Something has gone wrong. Check if the date is entered and if you are making the request correctly."
           }
-        },
-        "404": {
-          "description": "Something has gone wrong. Check if the date is entered and if you are making the request correctly."
         }
-      
       }
-    }
-  },
+    },
     "/products/": {
       "get": {
         "summary": "Give you products",
@@ -316,13 +317,14 @@
               "type": "array"
             }
           }
-        ],     
+        ],
         "responses": {
           "200": {
             "description": "You get products",
             "content": {
               "application/json": {
-                "schema": { "type": "array",
+                "schema": {
+                  "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
@@ -368,116 +370,175 @@
           },
           "404": {
             "description": "There aren't products, something went wrong."
-          }    
-        }
-      }
-  },
-  "/products/categories": {
-    "get": {
-      "summary": "Give you list of products",
-      "parameters": [
-        {
-          "name": "getProductsList",
-          "in": "path",
-          "description": "Give you list of products",
-          "schema": {
-            "type": "array"
           }
         }
-      ],     
-      "responses": {
-        "200": {
-          "description": "You get a list of products",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "example": "alcoholic drinks"
+      }
+    },
+    "/products/categories": {
+      "get": {
+        "summary": "Give you list of products",
+        "parameters": [
+          {
+            "name": "getProductsList",
+            "in": "path",
+            "description": "Give you list of products",
+            "schema": {
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "You get a list of products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "alcoholic drinks"
+                      }
                     }
                   }
+                }
               }
             }
-            }
+          },
+          "404": {
+            "description": "There won't be a list of products, something went wrong."
           }
-        },
-        "404": {
-          "description": "There won't be a list of products, something went wrong."
         }
       }
-    }
-  },
-  "/users/profile": {
-    "put": {
-      "summary": "Update user profile",
-      "consumes": ["application/json"],
-      "produces": ["application/json"],
-      "parameters": [
-        {
-          "in": "header",
-          "name": "Authorization",
-          "type": "string",
-          "default": "Bearer Token",
-          "description": "Authorization header with Bearer Token",
-          "required": true
-        },
-        {
-          "in": "body",
-          "name": "profileData",
-          "description": "User profile data to update",
-          "required": true,
-          "schema": {
-            "type": "object",
-            "properties": {
-              "height": {
-                "type": "integer",
-                "format": "int32",
-                "example": 149
-              },
-              "currentWeight": {
-                "type": "number",
-                "format": "float",
-                "example": 34
-              },
-              "desiredWeight": {
-                "type": "number",
-                "format": "float",
-                "example": 60
-              },
-              "birthday": {
-                "type": "string",
-                "example": "20/12/1990"
-              },
-              "blood": {
-                "type": "integer",
-                "format": "int32",
-                "example": 4
-              },
-              "sex": {
-                "type": "string",
-                "example": "male"
-              },
-              "levelActivity": {
-                "type": "integer",
-                "format": "int32",
-                "example": 1
+    },
+    "/users/profile": {
+      "put": {
+        "summary": "Update user profile",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "default": "Bearer Token",
+            "description": "Authorization header with Bearer Token",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "profileData",
+            "description": "User profile data to update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "height": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 149
+                },
+                "currentWeight": {
+                  "type": "number",
+                  "format": "float",
+                  "example": 34
+                },
+                "desiredWeight": {
+                  "type": "number",
+                  "format": "float",
+                  "example": 60
+                },
+                "birthday": {
+                  "type": "string",
+                  "example": "20/12/1990"
+                },
+                "blood": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 4
+                },
+                "sex": {
+                  "type": "string",
+                  "example": "male"
+                },
+                "levelActivity": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 1
+                }
               }
             }
           }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "User profile updated successfully"
+        ],
+        "responses": {
+          "200": {
+            "description": "User profile updated successfully"
+          }
+        },
+        "/users/avatars": {
+          "patch": {
+            "summary": "Upload user avatar",
+            "consumes": ["multipart/form-data"],
+            "produces": ["application/json"],
+            "parameters": [
+              {
+                "in": "header",
+                "name": "Authorization",
+                "type": "string",
+                "default": "Bearer Token",
+                "description": "Authorization header with Bearer Token",
+                "required": true
+              },
+              {
+                "in": "formData",
+                "name": "avatar",
+                "type": "file",
+                "description": "User avatar file to upload",
+                "required": true
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Avatar uploaded successfully"
+              }
+            }
+          }
+        },
+        "/avatars/:avatarFileName": {
+          "get": {
+            "summary": "Get user avatar",
+            "produces": ["image/jpeg", "image/png", "image/gif"],
+            "parameters": [
+              {
+                "in": "header",
+                "name": "Authorization",
+                "type": "string",
+                "default": "Bearer Token",
+                "description": "Authorization header with Bearer Token",
+                "required": true
+              },
+              {
+                "in": "path",
+                "name": "avatarFileName",
+                "type": "string",
+                "description": "The filename of the avatar to retrieve",
+                "required": true
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Avatar retrieved successfully",
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
         }
       }
     }
   }
 }
-}
-
-  
