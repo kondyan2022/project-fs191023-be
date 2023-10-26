@@ -32,6 +32,7 @@
   "paths": {
     "/users/register": {
       "post": {
+        "tags": ["Auth"],
         "summary": "Register a new user",
         "consumes": ["application/json"],
         "produces": ["application/json"],
@@ -69,6 +70,7 @@
     },
     "/users/login": {
       "post": {
+        "tags": ["Auth"],
         "summary": "Login with user credentials",
         "consumes": ["application/json"],
         "produces": ["application/json"],
@@ -102,6 +104,7 @@
     },
     "/users/logout": {
       "post": {
+        "tags": ["Auth"],
         "summary": "Logout the user",
         "consumes": ["application/json"],
         "produces": ["application/json"],
@@ -135,6 +138,7 @@
     },
     "/exercises/": {
       "get": {
+        "tags": ["Exercises"],
         "summary": "Give you list of trainings",
         "parameters": [
           {
@@ -200,6 +204,7 @@
     },
     "/exercises/exercisegroups": {
       "get": {
+        "tags": ["Exercises"],
         "summary": "Give you list of filters",
         "parameters": [
           {
@@ -247,6 +252,7 @@
     },
     "/diary/{date}": {
       "get": {
+        "tags": ["Diary"],
         "summary": "Request for get all products and exercises by selected date",
         "description": "For getting response you must write your date in the URL in the format monthdayyear. For example: https://power-plus-service.onrender.com/diary/10242023",
         "parameters": [
@@ -316,6 +322,7 @@
     },
     "/products/": {
       "get": {
+        "tags": ["Products"],
         "summary": "Give you products",
         "parameters": [
           {
@@ -388,6 +395,7 @@
     },
     "/products/categories": {
       "get": {
+        "tags": ["Products"],
         "summary": "Give you list of products",
         "parameters": [
           {
@@ -427,6 +435,7 @@
     },
     "/users/profile": {
       "put": {
+        "tags": ["Auth"],
         "summary": "Update user profile",
         "consumes": ["application/json"],
         "produces": ["application/json"],
@@ -526,6 +535,7 @@
     },
     "/users/avatars": {
       "patch": {
+        "tags": ["Auth"],
         "summary": "Upload user avatar",
         "consumes": ["multipart/form-data"],
         "produces": ["application/json"],
@@ -555,6 +565,7 @@
     },
     "/avatars/{avatarFileName}": {
       "get": {
+        "tags": ["Auth"],
         "summary": "Get user avatar",
         "produces": ["image/jpeg", "image/png", "image/gif"],
         "parameters": [
