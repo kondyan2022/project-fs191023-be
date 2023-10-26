@@ -5,6 +5,15 @@
     "version": "1.0.0",
     "description": "Back-end for Power Pulse's team"
   },
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "bearerAuth",
+      "in": "header",
+      "name": "Authorization",
+      "description": "Bearer token to access these api endpoints",
+      "scheme": "bearer"
+    }
+  },
   "consumes": ["application/json", "multipart/form-data"],
   "produces": ["application/json"],
   "servers": [
@@ -106,6 +115,11 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Logout the user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
@@ -141,6 +155,11 @@
       "get": {
         "tags": ["Exercises"],
         "summary": "Give you list of trainings",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "getExercises",
@@ -207,6 +226,11 @@
       "get": {
         "tags": ["Exercises"],
         "summary": "Give you list of filters",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "getExercisesGroups",
@@ -255,6 +279,11 @@
       "get": {
         "tags": ["Diary"],
         "summary": "Request for get all products and exercises by selected date",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "For getting response you must write your date in the URL in the format monthdayyear. For example: https://power-plus-service.onrender.com/diary/10242023",
         "parameters": [
           {
@@ -344,6 +373,11 @@
       "get": {
         "tags": ["Products"],
         "summary": "Give you products",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "getProducts",
@@ -417,6 +451,11 @@
       "get": {
         "tags": ["Products"],
         "summary": "Give you list of products",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "getProductsList",
@@ -457,6 +496,11 @@
       "put": {
         "tags": ["Auth"],
         "summary": "Update user profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
@@ -557,6 +601,11 @@
       "patch": {
         "tags": ["Auth"],
         "summary": "Upload user avatar",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "consumes": ["multipart/form-data"],
         "produces": ["application/json"],
         "parameters": [
@@ -587,6 +636,11 @@
       "get": {
         "tags": ["Auth"],
         "summary": "Get user avatar",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "produces": ["image/jpeg", "image/png", "image/gif"],
         "parameters": [
           {
@@ -621,6 +675,11 @@
       "get": {
         "tags": ["Auth"],
         "summary": "Get current user information",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
