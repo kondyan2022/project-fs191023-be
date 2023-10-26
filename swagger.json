@@ -136,6 +136,7 @@
         }
       }
     },
+
     "/exercises/": {
       "get": {
         "tags": ["Exercises"],
@@ -591,6 +592,85 @@
             "schema": {
               "type": "string",
               "format": "binary"
+            }
+          }
+        }
+      }
+    },
+
+    "/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get current user information",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "653800e44af33653569e9d93"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "www"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "karavang@gmail.com"
+                    },
+                    "avatarURL": {
+                      "type": "string",
+                      "example": "//www.gravatar.com/avatar/e620fe25eac4f8d8efc707f27f5523d7"
+                    },
+                    "profile": {
+                      "type": "object",
+                      "properties": {
+                        "height": {
+                          "type": "integer",
+                          "example": 170
+                        },
+                        "currentWeight": {
+                          "type": "number",
+                          "example": 65
+                        },
+                        "desiredWeight": {
+                          "type": "number",
+                          "example": 70
+                        },
+                        "birthday": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2000-12-20T00:00:00.000Z"
+                        },
+                        "blood": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "sex": {
+                          "type": "string",
+                          "example": "male"
+                        },
+                        "levelActivity": {
+                          "type": "integer",
+                          "example": 3
+                        },
+                        "DSN": {
+                          "type": "integer",
+                          "example": 110
+                        },
+                        "BMR": {
+                          "type": "integer",
+                          "example": 4823
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
