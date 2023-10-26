@@ -96,10 +96,23 @@ const diarySchema = new Schema(
           );
         },
       },
-      doneExercisesTime: {
+      leftExercisesTime: {
         get() {
-          return Math.round(
-            this.exercises.reduce((acc, { time }) => acc + time, 0) / 60
+          return (
+            this.DSN -
+            Math.round(
+              this.exercises.reduce((acc, { time }) => acc + time, 0) / 60
+            )
+          );
+        },
+      },
+      leftCalories: {
+        get() {
+          return (
+            this.BMR -
+            Math.round(
+              this.exercises.reduce((acc, { time }) => acc + time, 0) / 60
+            )
           );
         },
       },

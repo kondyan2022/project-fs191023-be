@@ -128,9 +128,11 @@ const sendVerificationToken = async (req, res) => {
 };
 
 const getCurrent = (req, res) => {
-  const { email } = req.user;
-  res.json({ email });
+  const { _id, name, email, avatarURL, profile } = req.user;
+  res.json({ _id, name, email, avatarURL, profile });
 };
+
+// "-createdAt -updatedAt -password -token -verify -verificationToken";
 
 const logout = async (req, res) => {
   const { _id } = req.user;
