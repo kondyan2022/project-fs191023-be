@@ -271,44 +271,63 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "owner": {
+                    "_id": {
                       "type": "string",
-                      "example": "65380df23cd01b5b25fdc778"
+                      "example": "653800e44af33653569e9d93"
                     },
-                    "date": {
+                    "name": {
                       "type": "string",
-                      "example": "10242023"
+                      "example": "www"
                     },
-                    "DSN": {
-                      "type": "number",
-                      "example": 110
+                    "email": {
+                      "type": "string",
+                      "example": "karavang@gmail.com"
                     },
-                    "BMR": {
-                      "type": "number",
-                      "example": 4823
+                    "avatarURL": {
+                      "type": "string",
+                      "example": "//www.gravatar.com/avatar/e620fe25eac4f8d8efc707f27f5523d7"
                     },
-                    "products": {
-                      "type": "array",
-                      "example": []
-                    },
-                    "exercises": {
-                      "type": "array",
-                      "example": []
-                    },
-                    "burnedCalories": {
-                      "type": "number",
-                      "format": "int32",
-                      "example": 300
-                    },
-                    "consumedCalories": {
-                      "type": "number",
-                      "format": "int32",
-                      "example": 130
-                    },
-                    "doneExercisesTime": {
-                      "type": "number",
-                      "format": "int32",
-                      "example": 30
+                    "profile": {
+                      "type": "object",
+                      "properties": {
+                        "height": {
+                          "type": "integer",
+                          "example": 170
+                        },
+                        "currentWeight": {
+                          "type": "integer",
+                          "example": 65
+                        },
+                        "desiredWeight": {
+                          "type": "integer",
+                          "example": 70
+                        },
+                        "birthday": {
+                          "type": "string",
+                          "format": "date",
+                          "example": "2000-12-20"
+                        },
+                        "blood": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "sex": {
+                          "type": "string",
+                          "example": "male"
+                        },
+                        "levelActivity": {
+                          "type": "integer",
+                          "example": 3
+                        },
+                        "DSN": {
+                          "type": "integer",
+                          "example": 110
+                        },
+                        "BMR": {
+                          "type": "integer",
+                          "example": 4823
+                        }
+                      }
                     }
                   }
                 }
