@@ -112,6 +112,16 @@
               }
             }
           },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -129,31 +139,92 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Logout the user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
 
-        "parameters": [
-          {
-            "in": "body",
-            "name": "user",
-            "description": "User data for logout",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string",
-                  "example": "one3@one.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "123456"
+        "responses": {
+          "204": {
+            "description": "User logged out successfully"
+          }
+        }
+      }
+    },
+
+    "/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get current user information",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "653800e44af33653569e9d93"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "www"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "karavang@gmail.com"
+                    },
+                    "avatarURL": {
+                      "type": "string",
+                      "example": "//www.gravatar.com/avatar/e620fe25eac4f8d8efc707f27f5523d7"
+                    },
+                    "profile": {
+                      "type": "object",
+                      "properties": {
+                        "height": {
+                          "type": "integer",
+                          "example": 170
+                        },
+                        "currentWeight": {
+                          "type": "number",
+                          "example": 65
+                        },
+                        "desiredWeight": {
+                          "type": "number",
+                          "example": 70
+                        },
+                        "birthday": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2000-12-20T00:00:00.000Z"
+                        },
+                        "blood": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "sex": {
+                          "type": "string",
+                          "example": "male"
+                        },
+                        "levelActivity": {
+                          "type": "integer",
+                          "example": 3
+                        },
+                        "DSN": {
+                          "type": "integer",
+                          "example": 110
+                        },
+                        "BMR": {
+                          "type": "integer",
+                          "example": 4823
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User logged out successfully"
           }
         }
       }
@@ -479,95 +550,7 @@
       "put": {
         "tags": ["Auth"],
         "summary": "Update user profile",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "default": "Bearer Token",
-            "description": "Authorization header with Bearer Token",
-            "required": true
-          },
-          {
-            "in": "body",
-            "name": "profileData",
-            "description": "User profile data to update",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "example": "653800e44af33653569e9d93"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "www"
-                },
-                "email": {
-                  "type": "string",
-                  "format": "email",
-                  "example": "karavang@gmail.com"
-                },
-                "avatarURL": {
-                  "type": "string",
-                  "format": "uri",
-                  "example": "//www.gravatar.com/avatar/e620fe25eac4f8d8efc707f27f5523d7"
-                },
-                "profile": {
-                  "type": "object",
-                  "properties": {
-                    "height": {
-                      "type": "integer",
-                      "format": "int32",
-                      "example": 170
-                    },
-                    "currentWeight": {
-                      "type": "number",
-                      "format": "float",
-                      "example": 65
-                    },
-                    "desiredWeight": {
-                      "type": "number",
-                      "format": "float",
-                      "example": 70
-                    },
-                    "birthday": {
-                      "type": "string",
-                      "format": "date-time",
-                      "example": "2000-12-20T00:00:00.000Z"
-                    },
-                    "blood": {
-                      "type": "integer",
-                      "format": "int32",
-                      "example": 4
-                    },
-                    "sex": {
-                      "type": "string",
-                      "enum": ["male", "female"],
-                      "example": "male"
-                    },
-                    "levelActivity": {
-                      "type": "integer",
-                      "format": "int32",
-                      "example": 3
-                    },
-                    "DSN": {
-                      "type": "integer",
-                      "example": 110
-                    },
-                    "BMR": {
-                      "type": "integer",
-                      "example": 4823
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "User profile updated successfully"
@@ -637,85 +620,6 @@
           }
         }
       }
-    },
-
-    "/users/current": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Get current user information",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "653800e44af33653569e9d93"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "www"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "karavang@gmail.com"
-                    },
-                    "avatarURL": {
-                      "type": "string",
-                      "example": "//www.gravatar.com/avatar/e620fe25eac4f8d8efc707f27f5523d7"
-                    },
-                    "profile": {
-                      "type": "object",
-                      "properties": {
-                        "height": {
-                          "type": "integer",
-                          "example": 170
-                        },
-                        "currentWeight": {
-                          "type": "number",
-                          "example": 65
-                        },
-                        "desiredWeight": {
-                          "type": "number",
-                          "example": 70
-                        },
-                        "birthday": {
-                          "type": "string",
-                          "format": "date-time",
-                          "example": "2000-12-20T00:00:00.000Z"
-                        },
-                        "blood": {
-                          "type": "integer",
-                          "example": 4
-                        },
-                        "sex": {
-                          "type": "string",
-                          "example": "male"
-                        },
-                        "levelActivity": {
-                          "type": "integer",
-                          "example": 3
-                        },
-                        "DSN": {
-                          "type": "integer",
-                          "example": 110
-                        },
-                        "BMR": {
-                          "type": "integer",
-                          "example": 4823
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -780,7 +684,28 @@
           }
         }
       },
-
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "653800e44af33653569e9d93"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "Avatar URL"
+          }
+        }
+      },
       "RegistrationRequest": {
         "type": "object",
         "required": ["name", "email", "password"],
@@ -800,13 +725,11 @@
             "example": "qwe123"
           }
         },
-        "example": [
-          {
-            "name": "John Doe",
-            "email": "email@email.com",
-            "password": "qwerty123"
-          }
-        ]
+        "example": {
+          "name": "John Doe",
+          "email": "email@email.com",
+          "password": "qwerty123"
+        }
       },
       "LoginRequest": {
         "type": "object",
@@ -823,91 +746,65 @@
             "example": "qwe123"
           }
         },
-        "example": [
-          {
-            "email": "email@email.com",
-            "password": "qwerty123"
-          }
-        ]
+        "example": {
+          "email": "email@email.com",
+          "password": "qwerty123"
+        }
       },
       "RegistrationResponse": {
         "type": "object",
-        "required": ["token", "user", "email", "avatar"],
+        "required": ["token", "user"],
         "properties": {
           "token": {
             "type": "string",
             "description": "User token"
           },
-          "user": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User name"
-              },
-              "email": {
-                "type": "string",
-                "description": "User email",
-                "format": "email"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "Avatar URL"
-              }
-            }
-          }
+          "user": { "$ref": "#/components/schemas/UserResponse" }
         },
-        "example": [
-          {
-            "token": "sdfhwry948efwefwef......",
-            "user": {
-              "name": "John Doe",
-              "email": "email@email.com",
-              "password": "qwerty123",
-              "avatarURL": "www.gravatar.com/avatar/05b7a73aa00dae385fa8aaacc470ddce"
-            }
+        "example": {
+          "token": "sdfhwry948efwefwef......",
+          "user": {
+            "name": "John Doe",
+            "email": "email@email.com",
+            "password": "qwerty123",
+            "avatarURL": "www.gravatar.com/avatar/05b7a73aa00dae385fa8aaacc470ddce"
           }
-        ]
+        }
       },
       "LoginResponse": {
         "type": "object",
-
+        "required": ["token", "user"],
         "properties": {
           "token": {
             "type": "string",
             "description": "User token"
           },
           "user": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User name"
-              },
-              "email": {
-                "type": "string",
-                "description": "User email",
-                "format": "email"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "Avatar URL"
-              },
-              "profile": { "$ref": "#/components/schemas/Profile" }
-            }
+            "$ref": "#/components/schemas/UserResponse",
+            "profile": { "$ref": "#/components/schemas/Profile" }
           }
         },
-        "example": [
-          {
-            "token": "sdfhwry948efwefwef......",
-            "user": {
-              "name": "John Doe",
-              "email": "email@email.com",
-              "password": "qwerty123",
-              "avatarURL": "www.gravatar.com/avatar/05b7a73aa00dae385fa8aaacc470ddce"
+
+        "example": {
+          "token": "sdfhwry948efwefwef......",
+          "user": {
+            "name": "John Doe",
+            "email": "email@email.com",
+            "password": "qwerty123",
+            "avatarURL": "www.gravatar.com/avatar/05b7a73aa00dae385fa8aaacc470ddce",
+            "profile": {
+              "height": 170,
+              "currentWeight": 65,
+              "desiredWeight": 70,
+              "birthday": "2000-12-20T00:00:00.000Z",
+              "blood": 4,
+              "sex": "male",
+              "levelActivity": 3,
+              "DSN": 110,
+              "BMR": 4823
             }
           }
-        ]
+        }
       },
 
       "ErrorResponse": {
