@@ -1,13 +1,9 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.0",
   "info": {
     "title": "Power Pulse API",
     "version": "1.0.0",
-    "description": "Back-end for Power Pulse's team",
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
-    }
+    "description": "Back-end for Power Pulse's team"
   },
   "consumes": ["application/json", "multipart/form-data"],
   "produces": ["application/json"],
@@ -38,48 +34,36 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Register a new user",
-        "parameters": [],
-        "requestBody": {
-          "description": "User data",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User registration data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "One"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "one3@one.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                }
               }
             }
           }
-        },
+        ],
         "responses": {
-          "201": {
-            "description": "User registered successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Email in use",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
+          "200": {
+            "description": "User registered successfully"
           }
         }
       }
@@ -88,39 +72,32 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Login with user credentials",
-        "parameters": [],
-        "requestBody": {
-          "description": "User login data",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User login data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "one3@one.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                }
               }
             }
           }
-        },
-        "security": [{ "Bearer": [] }],
+        ],
         "responses": {
           "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
+            "description": "User logged in successfully"
           }
         }
       }
@@ -129,7 +106,8 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Logout the user",
-
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -163,11 +141,6 @@
       "get": {
         "tags": ["Exercises"],
         "summary": "Give you list of trainings",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "getExercises",
@@ -234,11 +207,6 @@
       "get": {
         "tags": ["Exercises"],
         "summary": "Give you list of filters",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "getExercisesGroups",
@@ -287,11 +255,6 @@
       "get": {
         "tags": ["Diary"],
         "summary": "Request for get all products and exercises by selected date",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "description": "For getting response you must write your date in the URL in the format monthdayyear. For example: https://power-plus-service.onrender.com/diary/10242023",
         "parameters": [
           {
@@ -381,11 +344,6 @@
       "get": {
         "tags": ["Products"],
         "summary": "Give you products",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "getProducts",
@@ -459,11 +417,6 @@
       "get": {
         "tags": ["Products"],
         "summary": "Give you list of products",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "getProductsList",
@@ -504,11 +457,6 @@
       "put": {
         "tags": ["Auth"],
         "summary": "Update user profile",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
@@ -609,11 +557,6 @@
       "patch": {
         "tags": ["Auth"],
         "summary": "Upload user avatar",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "consumes": ["multipart/form-data"],
         "produces": ["application/json"],
         "parameters": [
@@ -644,11 +587,6 @@
       "get": {
         "tags": ["Auth"],
         "summary": "Get user avatar",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "produces": ["image/jpeg", "image/png", "image/gif"],
         "parameters": [
           {
@@ -683,11 +621,6 @@
       "get": {
         "tags": ["Auth"],
         "summary": "Get current user information",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -760,216 +693,6 @@
             }
           }
         }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Profile": {
-        "type": "object",
-        "required": [
-          "height, currentWeight, desiredWeight, birthday, blood, sex, levelActivity, DSN, BMR"
-        ],
-        "properties": {
-          "height": {
-            "type": "number",
-            "description": "user height",
-            "minimum": 150,
-            "example": 170
-          },
-          "currentWeight": {
-            "type": "number",
-            "description": "current user weight",
-            "minimum": 35,
-            "example": 85
-          },
-          "desiredWeight": {
-            "type": "number",
-            "description": "current user weight",
-            "minimum": 35,
-            "example": 70
-          },
-          "birthday": {
-            "type": "string",
-            "description": "Birth date",
-            "format": "UTC",
-            "example": "2000-12-20T00:00:00.000Z"
-          },
-          "blood": {
-            "type": "number",
-            "description": "Blood type",
-            "enum": [1, 2, 3, 4],
-            "example": 4
-          },
-          "sex": {
-            "type": "string",
-            "description": "Sex",
-            "enum": ["male", "female"],
-            "example": "male"
-          },
-          "levelActivity": {
-            "type": "number",
-            "description": "Level activity",
-            "enum": [1, 2, 3, 4, 5],
-            "example": 3
-          },
-          "DSN": {
-            "type": "number",
-            "description": "Time for exercises per day ",
-            "example": 110
-          },
-          "BMR": {
-            "type": "number",
-            "description": "calories intake limit",
-            "example": 4832
-          }
-        }
-      },
-
-      "RegistrationRequest": {
-        "type": "object",
-        "required": ["name", "email", "password"],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "User name"
-          },
-          "email": {
-            "type": "string",
-            "description": "User email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User password",
-            "example": "qwe123"
-          }
-        },
-        "example": [
-          {
-            "name": "John Doe",
-            "email": "email@email.com",
-            "password": "qwerty123"
-          }
-        ]
-      },
-      "LoginRequest": {
-        "type": "object",
-        "required": ["email", "password"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User password",
-            "example": "qwe123"
-          }
-        },
-        "example": [
-          {
-            "email": "email@email.com",
-            "password": "qwerty123"
-          }
-        ]
-      },
-      "RegistrationResponse": {
-        "type": "object",
-        "required": ["token", "user", "email", "avatar"],
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User token"
-          },
-          "user": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User name"
-              },
-              "email": {
-                "type": "string",
-                "description": "User email",
-                "format": "email"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "Avatar URL"
-              }
-            }
-          }
-        },
-        "example": [
-          {
-            "token": "sdfhwry948efwefwef......",
-            "user": {
-              "name": "John Doe",
-              "email": "email@email.com",
-              "password": "qwerty123",
-              "avatarURL": "www.gravatar.com/avatar/05b7a73aa00dae385fa8aaacc470ddce"
-            }
-          }
-        ]
-      },
-      "LoginResponse": {
-        "type": "object",
-
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User token"
-          },
-          "user": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User name"
-              },
-              "email": {
-                "type": "string",
-                "description": "User email",
-                "format": "email"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "Avatar URL"
-              },
-              "profile": { "$ref": "#/components/schemas/Profile" }
-            }
-          }
-        },
-        "example": [
-          {
-            "token": "sdfhwry948efwefwef......",
-            "user": {
-              "name": "John Doe",
-              "email": "email@email.com",
-              "password": "qwerty123",
-              "avatarURL": "www.gravatar.com/avatar/05b7a73aa00dae385fa8aaacc470ddce"
-            }
-          }
-        ]
-      },
-
-      "ErrorResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "Message"
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "Bearer": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
       }
     }
   }
