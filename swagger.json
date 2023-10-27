@@ -9,8 +9,6 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "consumes": ["application/json", "multipart/form-data"],
-  "produces": ["application/json"],
   "servers": [
     { "url": "http://localhost:3000" },
     { "url": "https://power-plus-service.onrender.com" }
@@ -154,73 +152,78 @@
       "get": {
         "tags": ["Auth"],
         "summary": "Get current user information",
+        "parameters": [],
         "security": [{ "Bearer": [] }],
+
         "responses": {
           "200": {
             "description": "Successful response",
             "content": {
               "application/json": {
+                "schema": { "$ref": "#/components/schemas/CurrentUserResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "put": {
+        "tags": ["Auth"],
+        "summary": "Update user profile",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateUserReqest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CurrentUserResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/avatars": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Upload user avatar",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "file": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Avatar uploaded successfully",
+            "content": {
+              "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "653800e44af33653569e9d93"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "www"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "karavang@gmail.com"
-                    },
-                    "avatarURL": {
-                      "type": "string",
-                      "example": "//www.gravatar.com/avatar/e620fe25eac4f8d8efc707f27f5523d7"
-                    },
-                    "profile": {
-                      "type": "object",
-                      "properties": {
-                        "height": {
-                          "type": "integer",
-                          "example": 170
-                        },
-                        "currentWeight": {
-                          "type": "number",
-                          "example": 65
-                        },
-                        "desiredWeight": {
-                          "type": "number",
-                          "example": 70
-                        },
-                        "birthday": {
-                          "type": "string",
-                          "format": "date-time",
-                          "example": "2000-12-20T00:00:00.000Z"
-                        },
-                        "blood": {
-                          "type": "integer",
-                          "example": 4
-                        },
-                        "sex": {
-                          "type": "string",
-                          "example": "male"
-                        },
-                        "levelActivity": {
-                          "type": "integer",
-                          "example": 3
-                        },
-                        "DSN": {
-                          "type": "integer",
-                          "example": 110
-                        },
-                        "BMR": {
-                          "type": "integer",
-                          "example": 4823
-                        }
-                      }
-                    }
+                  "properties": { "avatarURL": { "type": "string" } },
+                  "example": {
+                    "avatarURL": "avatars/6538e3ccfc9b82da0c901910.jpg"
                   }
                 }
               }
@@ -229,7 +232,6 @@
         }
       }
     },
-
     "/exercises/": {
       "get": {
         "tags": ["Exercises"],
@@ -545,86 +547,11 @@
           }
         }
       }
-    },
-    "/users/profile": {
-      "put": {
-        "tags": ["Auth"],
-        "summary": "Update user profile",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "User profile updated successfully"
-          }
-        }
-      }
-    },
-    "/users/avatars": {
-      "patch": {
-        "tags": ["Auth"],
-        "summary": "Upload user avatar",
-        "consumes": ["multipart/form-data"],
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "default": "Bearer Token",
-            "description": "Authorization header with Bearer Token",
-            "required": true
-          },
-          {
-            "in": "formData",
-            "name": "avatar",
-            "type": "file",
-            "description": "User avatar file to upload",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Avatar uploaded successfully"
-          }
-        }
-      }
-    },
-    "/avatars/{avatarFileName}": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Get user avatar",
-        "produces": ["image/jpeg", "image/png", "image/gif"],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "default": "Bearer Token",
-            "description": "Authorization header with Bearer Token",
-            "required": true
-          },
-          {
-            "in": "path",
-            "name": "avatarFileName",
-            "type": "string",
-            "description": "The filename of the avatar to retrieve",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Avatar retrieved successfully",
-            "schema": {
-              "type": "string",
-              "format": "binary"
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "schemas": {
-      "Profile": {
+      "profile": {
         "type": "object",
         "required": [
           "height, currentWeight, desiredWeight, birthday, blood, sex, levelActivity, DSN, BMR"
@@ -684,28 +611,7 @@
           }
         }
       },
-      "UserResponse": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string",
-            "example": "653800e44af33653569e9d93"
-          },
-          "name": {
-            "type": "string",
-            "description": "User name"
-          },
-          "email": {
-            "type": "string",
-            "description": "User email",
-            "format": "email"
-          },
-          "avatarURL": {
-            "type": "string",
-            "description": "Avatar URL"
-          }
-        }
-      },
+
       "RegistrationRequest": {
         "type": "object",
         "required": ["name", "email", "password"],
@@ -731,6 +637,48 @@
           "password": "qwerty123"
         }
       },
+      "RegistrationResponse": {
+        "type": "object",
+        "required": ["token", "user"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User token"
+          },
+          "user": {
+            "type": "object",
+            "required": ["_id", "name", "email", "avatarURL"],
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "653800e44af33653569e9d93"
+              },
+              "name": {
+                "type": "string",
+                "description": "User name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "format": "email"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "Avatar URL"
+              }
+            }
+          }
+        },
+        "example": {
+          "token": "sdfhwry948efwefwef......",
+          "user": {
+            "name": "John Doe",
+            "email": "email@email.com",
+            "password": "qwerty123",
+            "avatarURL": "www.gravatar.com/avatar/05b7a73aa00dae385fa8aaacc470ddce"
+          }
+        }
+      },
       "LoginRequest": {
         "type": "object",
         "required": ["email", "password"],
@@ -751,26 +699,6 @@
           "password": "qwerty123"
         }
       },
-      "RegistrationResponse": {
-        "type": "object",
-        "required": ["token", "user"],
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User token"
-          },
-          "user": { "$ref": "#/components/schemas/UserResponse" }
-        },
-        "example": {
-          "token": "sdfhwry948efwefwef......",
-          "user": {
-            "name": "John Doe",
-            "email": "email@email.com",
-            "password": "qwerty123",
-            "avatarURL": "www.gravatar.com/avatar/05b7a73aa00dae385fa8aaacc470ddce"
-          }
-        }
-      },
       "LoginResponse": {
         "type": "object",
         "required": ["token", "user"],
@@ -780,8 +708,87 @@
             "description": "User token"
           },
           "user": {
-            "$ref": "#/components/schemas/UserResponse",
-            "profile": { "$ref": "#/components/schemas/Profile" }
+            "type": "object",
+            "required": ["_id", "name", "email", "avatarURL"],
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "653800e44af33653569e9d93"
+              },
+              "name": {
+                "type": "string",
+                "description": "User name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "format": "email"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "Avatar URL"
+              },
+              "profile": {
+                "type": "object",
+                "required": [
+                  "height, currentWeight, desiredWeight, birthday, blood, sex, levelActivity, DSN, BMR"
+                ],
+                "properties": {
+                  "height": {
+                    "type": "number",
+                    "description": "user height",
+                    "minimum": 150,
+                    "example": 170
+                  },
+                  "currentWeight": {
+                    "type": "number",
+                    "description": "current user weight",
+                    "minimum": 35,
+                    "example": 85
+                  },
+                  "desiredWeight": {
+                    "type": "number",
+                    "description": "current user weight",
+                    "minimum": 35,
+                    "example": 70
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "description": "Birth date",
+                    "format": "UTC",
+                    "example": "2000-12-20T00:00:00.000Z"
+                  },
+                  "blood": {
+                    "type": "number",
+                    "description": "Blood type",
+                    "enum": [1, 2, 3, 4],
+                    "example": 4
+                  },
+                  "sex": {
+                    "type": "string",
+                    "description": "Sex",
+                    "enum": ["male", "female"],
+                    "example": "male"
+                  },
+                  "levelActivity": {
+                    "type": "number",
+                    "description": "Level activity",
+                    "enum": [1, 2, 3, 4, 5],
+                    "example": 3
+                  },
+                  "DSN": {
+                    "type": "number",
+                    "description": "Time for exercises per day ",
+                    "example": 110
+                  },
+                  "BMR": {
+                    "type": "number",
+                    "description": "calories intake limit",
+                    "example": 4832
+                  }
+                }
+              }
+            }
           }
         },
 
@@ -806,7 +813,149 @@
           }
         }
       },
-
+      "CurrentUserResponse": {
+        "type": "object",
+        "required": ["_id", "name", "email", "avatarURL"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "653800e44af33653569e9d93"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "Avatar URL"
+          },
+          "profile": {
+            "type": "object",
+            "required": [
+              "height, currentWeight, desiredWeight, birthday, blood, sex, levelActivity, DSN, BMR"
+            ],
+            "properties": {
+              "height": {
+                "type": "number",
+                "description": "user height",
+                "minimum": 150,
+                "example": 170
+              },
+              "currentWeight": {
+                "type": "number",
+                "description": "current user weight",
+                "minimum": 35,
+                "example": 85
+              },
+              "desiredWeight": {
+                "type": "number",
+                "description": "current user weight",
+                "minimum": 35,
+                "example": 70
+              },
+              "birthday": {
+                "type": "string",
+                "description": "Birth date",
+                "format": "UTC",
+                "example": "2000-12-20T00:00:00.000Z"
+              },
+              "blood": {
+                "type": "number",
+                "description": "Blood type",
+                "enum": [1, 2, 3, 4],
+                "example": 4
+              },
+              "sex": {
+                "type": "string",
+                "description": "Sex",
+                "enum": ["male", "female"],
+                "example": "male"
+              },
+              "levelActivity": {
+                "type": "number",
+                "description": "Level activity",
+                "enum": [1, 2, 3, 4, 5],
+                "example": 3
+              },
+              "DSN": {
+                "type": "number",
+                "description": "Time for exercises per day ",
+                "example": 110
+              },
+              "BMR": {
+                "type": "number",
+                "description": "calories intake limit",
+                "example": 4832
+              }
+            }
+          }
+        }
+      },
+      "UpdateUserReqest": {
+        "type": "object",
+        "required": ["_id", "name", "email", "avatarURL"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name"
+          },
+          "profile": {
+            "type": "object",
+            "required": [
+              "height, currentWeight, desiredWeight, birthday, blood, sex, levelActivity, DSN, BMR"
+            ],
+            "properties": {
+              "height": {
+                "type": "number",
+                "description": "user height",
+                "minimum": 150,
+                "example": 170
+              },
+              "currentWeight": {
+                "type": "number",
+                "description": "current user weight",
+                "minimum": 35,
+                "example": 85
+              },
+              "desiredWeight": {
+                "type": "number",
+                "description": "current user weight",
+                "minimum": 35,
+                "example": 70
+              },
+              "birthday": {
+                "type": "string",
+                "description": "Birth date",
+                "format": "UTC",
+                "example": "2000-12-20T00:00:00.000Z"
+              },
+              "blood": {
+                "type": "number",
+                "description": "Blood type",
+                "enum": [1, 2, 3, 4],
+                "example": 4
+              },
+              "sex": {
+                "type": "string",
+                "description": "Sex",
+                "enum": ["male", "female"],
+                "example": "male"
+              },
+              "levelActivity": {
+                "type": "number",
+                "description": "Level activity",
+                "enum": [1, 2, 3, 4, 5],
+                "example": 3
+              }
+            }
+          }
+        }
+      },
       "ErrorResponse": {
         "type": "object",
         "properties": {
