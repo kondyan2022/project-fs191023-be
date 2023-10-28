@@ -157,6 +157,7 @@ const updateSchema = Joi.object({
   name: Joi.string().min(2),
   // password: Joi.string().min(6),
   // email: Joi.string().email(),
+  avatarURL: Joi.string(),
   profile: Joi.object().keys({
     height: Joi.number().min(150).required(),
     currentWeight: Joi.number().min(35).required(),
