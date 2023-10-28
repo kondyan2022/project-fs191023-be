@@ -37,7 +37,7 @@ router.patch(
 );
 
 router.put(
-  "/profile",
+  "/",
   authentificate,
   validateBody(schemas.updateSchema),
   ctrl.updateProfile
