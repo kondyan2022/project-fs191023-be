@@ -123,4 +123,13 @@ const diarySchema = new Schema(
 diarySchema.post("save", handleMongooseError);
 const Diary = model("diary", diarySchema);
 
-module.exports = { Diary };
+const getDiarySchemaParams = Joi.object({
+  date: Joi.string().pattern(
+    /^(19[0-9][0-9]|20[012][0-9])(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/
+  ),
+});
+const schemas = {
+  getDiarySchemaParams,
+};
+
+module.exports = { Diary, schemas };
