@@ -9,12 +9,6 @@ const { schemas } = require("../models/diary");
 
 const router = express.Router();
 
-<<<<<<< Updated upstream
-router.get("/:date", authentificate, ctrl.diaryByDate);
-router.post("/exercise", authentificate, ctrl.postExerciseToDiary);
-router.post("/product", authentificate, ctrl.postProductsToDiary);
-router.delete("/product", authentificate, ctrl.deleteProductsFromDiary);
-=======
 router.get(
   "/:date",
   authentificate,
@@ -23,6 +17,6 @@ router.get(
 );
 router.post("/exercise", authentificate, ctrl.postExerciseToDiary);
 router.post("/product", authentificate, ctrl.postProductsToDiary);
->>>>>>> Stashed changes
+router.delete("/product", authentificate, ctrl.deleteProductsFromDiary);
 
 module.exports = router;
