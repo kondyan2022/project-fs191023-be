@@ -21,17 +21,15 @@ const getProductsSearch = async (req, res) => {
   if (category) {
     options.category = category;
   }
-  // const recommendObj =
+
   console.log({ recommend });
   if (recommend !== undefined) {
     const {
       profile: { blood },
     } = req.user;
-
     options["groupBloodNotAllowed." + blood] = !recommend;
-    // options.groupBloodNotAllowed["$elemMatch"] = { [blood]: !recommend };
   }
-  console.log(options);
+
   const product = await Product.find(options)
     .limit(limit)
     .skip(limit * page)
