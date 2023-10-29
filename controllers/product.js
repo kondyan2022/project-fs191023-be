@@ -22,7 +22,6 @@ const getProductsSearch = async (req, res) => {
     options.category = category;
   }
 
-  console.log({ recommend });
   if (recommend !== undefined) {
     const {
       profile: { blood },
