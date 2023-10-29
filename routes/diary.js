@@ -17,8 +17,16 @@ router.get(
   validateParams(schemas.getDiarySchemaParams),
   ctrl.diaryByDate
 );
-router.post("/exercise", authentificate, ctrl.postExerciseToDiary);
-router.post("/product", authentificate, ctrl.postProductsToDiary);
+router.post(
+  "/exercise",
+  authentificate,
+  validateBody(schemas.addExerciseSchema),
+  ctrl.postExerciseToDiary);
+router.post(
+  "/product",
+  authentificate,
+  validateBody(schemas.addProductSchema),
+  ctrl.postProductsToDiary);
 router.delete("/product", authentificate, ctrl.deleteProductsFromDiary);
 
 module.exports = router;
