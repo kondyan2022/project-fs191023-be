@@ -348,6 +348,133 @@
         }
       }
     },
+    "/exercises/search": {
+      "get": {
+        "tags": ["Exercises"],
+        "summary": "Give you list of trainings with filters and pagination",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "description": "Filter filed name for exercise group.",
+            "schema": {
+              "type": "string",
+              "example": "equipment"
+            }
+          },
+          {
+            "in": "query",
+            "name": "value",
+            "description": "Value for field specified in 'filter' parameter ",
+            "schema": { "type": "string", "example": "barbell" }
+          },
+          {
+            "in": "query",
+            "name": "target",
+            "description": "Value for filter by field 'target' ",
+            "schema": { "type": "string", "example": "lats" }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Page number ",
+            "schema": { "type": "number", "example": 0, "default": 0 }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Item per page",
+            "schema": { "type": "number", "example": 20, "default": 20 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "You are got page of exercises list with paination data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "filter": {
+                      "type": "object",
+                      "properties": {
+                        "equipment": { "type": "string" },
+                        "target": { "type": "string" }
+                      },
+                      "example": {
+                        "equipment": "barbell",
+                        "target": "lats"
+                      }
+                    },
+                    "page": { "type": "number" },
+                    "limit": { "type": "number" },
+                    "totalPage": { "type": "number" },
+                    "totalCount": { "type": "number" },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": { "type": "string" },
+                          "bodyPart": {
+                            "type": "string"
+                          },
+                          "equipment": {
+                            "type": "string"
+                          },
+                          "gifUrl": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "target": {
+                            "type": "string"
+                          },
+                          "burnedCalories": {
+                            "type": "number"
+                          },
+                          "time": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "filter": {
+                      "equipment": "dumbbell",
+                      "target": "pectorals"
+                    },
+                    "page": 0,
+                    "limit": 20,
+                    "totalPage": 3,
+                    "totalCount": 43,
+                    "results": [
+                      {
+                        "_id": "64f2458d6f67bc34bae4fae0",
+                        "bodyPart": "chest",
+                        "equipment": "dumbbell",
+                        "gifUrl": "https://ftp.goit.study/img/power-pulse/gifs/1276.gif",
+                        "name": "dumbbell decline one arm fly",
+                        "target": "pectorals",
+                        "burnedCalories": 205,
+                        "time": 3
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There won't be a list of exercises, something went wrong."
+          }
+        }
+      }
+    },
+
     "/diary/{date}": {
       "get": {
         "tags": ["Diary"],
@@ -546,6 +673,117 @@
           },
           "404": {
             "description": "There won't be a list of products, something went wrong."
+          }
+        }
+      }
+    },
+    "/products/search": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Give you list products with search, filters and pagination",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "description": "Text filter for 'title' field",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "description": "Category for selection ",
+            "schema": { "type": "string" }
+          },
+          {
+            "in": "query",
+            "name": "recommend",
+            "description": "Recommend for filter by field 'groupBloodNotAllowed' ",
+            "schema": { "type": "boolean" }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Page number ",
+            "schema": { "type": "number", "example": 0, "default": 0 }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Item per page",
+            "schema": { "type": "number", "example": 20, "default": 20 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "You are got page of exercises list with paination data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "searchKey": { "type": "string" },
+                    "category": { "type": "string" },
+                    "recommend": { "type": "string" },
+                    "page": { "type": "number" },
+                    "limit": { "type": "number" },
+                    "totalPage": { "type": "number" },
+                    "totalCount": { "type": "number" },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": { "type": "string" },
+                          "weight": {
+                            "type": "number",
+                            "example": "100"
+                          },
+                          "calories": {
+                            "type": "number",
+                            "example": "300"
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "vegetables and herbs"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "Salads Belaya Dacha Delicate root"
+                          },
+                          "groupBloodNotAllowed": {
+                            "type": "object",
+                            "properties": {
+                              "1": {
+                                "type": "boolean",
+                                "example": "true"
+                              },
+                              "2": {
+                                "type": "boolean",
+                                "example": "true"
+                              },
+                              "3": {
+                                "type": "boolean",
+                                "example": "true"
+                              },
+                              "4": {
+                                "type": "boolean",
+                                "example": "true"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There won't be a list of exercises, something went wrong."
           }
         }
       }

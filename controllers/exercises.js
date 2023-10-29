@@ -37,7 +37,7 @@ const getExercisesSearch = async (req, res) => {
     limit,
     totalPage,
     totalCount,
-    result: exercises,
+    results: exercises,
   });
 };
 

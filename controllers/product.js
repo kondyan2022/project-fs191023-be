@@ -4,7 +4,6 @@ const { ProductList } = require("../models/ProductList.js");
 
 const getProduct = async (req, res) => {
   const product = await Product.find();
-  console.log(product.length);
   res.json(product);
 };
 
@@ -39,11 +38,12 @@ const getProductsSearch = async (req, res) => {
   res.json({
     searchkey: q,
     category: category ? category : "All",
+    recommend: recommend !== undefined ? String(recommend) : "All",
     page,
     limit,
     totalPage,
     totalCount,
-    result: product,
+    results: product,
   });
 };
 
