@@ -238,16 +238,8 @@
       "get": {
         "tags": ["Exercises"],
         "summary": "Give you list of trainings",
-        "parameters": [
-          {
-            "name": "getExercises",
-            "in": "path",
-            "description": "Give you list of trainings",
-            "schema": {
-              "type": "array"
-            }
-          }
-        ],
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "You are got exercises list",
@@ -304,16 +296,8 @@
       "get": {
         "tags": ["Exercises"],
         "summary": "Give you list of filters",
-        "parameters": [
-          {
-            "name": "getExercisesGroups",
-            "in": "path",
-            "description": "Give you list of filters",
-            "schema": {
-              "type": "array"
-            }
-          }
-        ],
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "You are got filters list",
@@ -478,13 +462,16 @@
     "/diary/{date}": {
       "get": {
         "tags": ["Diary"],
+        "security": [{ "Bearer": [] }],
         "summary": "Request for get all products and exercises by selected date",
         "description": "For getting response you must write your date in the URL in the format monthdayyear. For example: https://power-plus-service.onrender.com/diary/10242023",
         "parameters": [
           {
             "name": "date",
             "in": "path",
-            "description": "Date in the format monthdayyear (e.g., 10242023)"
+            "description": "Date in the format monthdayyear (e.g., 10242023)",
+            "schema": { "type": "string" },
+            "required": true
           }
         ],
         "responses": {
@@ -568,16 +555,8 @@
       "get": {
         "tags": ["Products"],
         "summary": "Give you products",
-        "parameters": [
-          {
-            "name": "getProducts",
-            "in": "path",
-            "description": "Give you products",
-            "schema": {
-              "type": "array"
-            }
-          }
-        ],
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
             "description": "You get products",
@@ -641,16 +620,8 @@
       "get": {
         "tags": ["Products"],
         "summary": "Give you list of products",
-        "parameters": [
-          {
-            "name": "getProductsList",
-            "in": "path",
-            "description": "Give you list of products",
-            "schema": {
-              "type": "array"
-            }
-          }
-        ],
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "You get a list of products",
