@@ -2,10 +2,10 @@ const express = require("express");
 const ctrl = require("../controllers/users");
 const {
   validateBody,
-  upload,
   resizeAvatar,
   isSingleFileExist,
   authentificate,
+  upload,
 } = require("../middlewares");
 const { schemas } = require("../models/user");
 
@@ -32,7 +32,7 @@ router.patch(
   authentificate,
   upload.single("avatar"),
   isSingleFileExist,
-  resizeAvatar,
+  // resizeAvatar,
   ctrl.updateAvatar
 );
 
