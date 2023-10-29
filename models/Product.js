@@ -55,6 +55,7 @@ const getProductsSearchQuery = Joi.object({
   catgory: Joi.string(),
   limit: Joi.number().min(1),
   page: Joi.number().min(0),
+  recommend: Joi.boolean(),
 }).unknown();
 
 const schemas = {

@@ -75,10 +75,7 @@ const postProductsToDiary = async (req, res, next) => {
 const deleteProductsFromDiary = async (req, res, next) => {
   const { _id } = req.user;
   const { date, itemid } = req.body;
-  // const productItem = await Product.findById(prodictid);
-  // if (!productItem) {
-  //   throw HttpError(404, "Product not found");
-  // }
+
   let diaryItem = await Diary.findOne({ date, owner: _id });
 
   if (!diaryItem) {
