@@ -207,7 +207,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "filename": {
+                  "file": {
                     "type": "array",
                     "items": { "type": "string", "format": "binary" }
                   }
