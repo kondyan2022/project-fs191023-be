@@ -7,10 +7,13 @@ const {
   // sendEmailElastic,
 } = require("../helpers");
 const jwt = require("jsonwebtoken");
-const gavatar = require("gravatar");
+// const gavatar = require("gravatar");
 const path = require("path");
 const fs = require("fs/promises");
 const { nanoid } = require("nanoid");
+
+const DEFAULT_AVATAR =
+  "https://res.cloudinary.com/dfhl9z7ez/image/upload/v1698618013/avatars/noavatar.png";
 
 const { SECRET_KEY, BASE_URL } = process.env;
 
@@ -25,7 +28,7 @@ const registration = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-  const avatarURL = gavatar.url(email);
+  const avatarURL = DEFAULT_AVATAR;
   const verificationToken = nanoid(); // Токен при verify = true не має значення
   const verify = true; //Email - вважаємо перевірено при створенні
 
@@ -141,28 +144,33 @@ const logout = async (req, res) => {
   res.sendStatus(204);
 };
 
-const updateUser = async (req, res) => {
-  const { _id } = req.user;
-  const user = await User.findByIdAndUpdate(_id, req.body, {
-    new: true,
-    select: "-createdAt -updatedAt",
-  });
-  res.json(user);
-};
+// const updateUser = async (req, res) => {
+//   const { _id } = req.user;
+//   const user = await User.findByIdAndUpdate(_id, req.body, {
+//     new: true,
+//     select: "-createdAt -updatedAt",
+//   });
+//   res.json(user);
+// };
 
-const updateAvatar = async (req, res, next) => {
-  const { _id } = req.user;
-  const { path: tempUpload, originalname } = req.file;
-  const filename = `${_id}_${originalname}`;
-  const resultUpload = path.join(avatarsDir, filename);
-  try {
-    await fs.rename(tempUpload, resultUpload);
-  } catch (error) {
-    fs.unlink(tempUpload);
-    next(error);
-  }
-  const avatarURL = path.join("avatars", filename);
-  await User.findByIdAndUpdate(_id, { avatarURL });
+// const updateAvatar = async (req, res, next) => {
+//   const { _id } = req.user;
+//   const { path: tempUpload, originalname } = req.file;
+//   const filename = `${_id}_${originalname}`;
+//   const resultUpload = path.join(avatarsDir, filename);
+//   try {
+//     await fs.rename(tempUpload, resultUpload);
+//   } catch (error) {
+//     fs.unlink(tempUpload);
+//     next(error);
+//   }
+//   const avatarURL = path.join("avatars", filename);
+//   await User.findByIdAndUpdate(_id, { avatarURL });
+//   res.json({ avatarURL });
+// };
+
+const updateAvatar = async (req, res) => {
+  const avatarURL = req.file.path;
   res.json({ avatarURL });
 };
 
@@ -182,7 +190,6 @@ module.exports = {
   sendVerificationToken: ctrlWrapper(sendVerificationToken),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
-  updateUser: ctrlWrapper(updateUser),
   updateAvatar: ctrlWrapper(updateAvatar),
   updateProfile: ctrlWrapper(updateProfile),
 };
