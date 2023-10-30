@@ -123,4 +123,50 @@ const diarySchema = new Schema(
 diarySchema.post("save", handleMongooseError);
 const Diary = model("diary", diarySchema);
 
-module.exports = { Diary };
+const getDiarySchemaParams = Joi.object({
+  date: Joi.string()
+    .pattern(
+      /^(19[0-9][0-9]|20[012][0-9])(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/
+    )
+    .message("Invalid data format. YYYYMMDD requered!"),
+});
+
+const addProductSchema = Joi.object({
+  product: Joi.string()
+    .required(),
+  date: Joi.string()
+    .pattern(/^(19[0-9][0-9]|20[012][0-9])(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/)
+    .message("Invalid data format. YYYYMMDD requered!")
+    .required(),
+  amount: Joi.number()
+    .min(1)
+    .required(),
+  calories: Joi
+    .number()
+    .min(1)
+    .required()
+});
+
+const addExerciseSchema = Joi.object({
+  exercise: Joi.string()
+    .required(),
+  date: Joi.string()
+    .pattern(/^(19[0-9][0-9]|20[012][0-9])(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/)
+    .message("Invalid data format. YYYYMMDD requered!")
+    .required(),
+  time: Joi.number()
+    .min(1)
+    .required(),
+  calories: Joi.number()
+    .min(1)
+    .required(),
+});
+
+const schemas = {
+  getDiarySchemaParams,
+  addProductSchema,
+  addExerciseSchema
+};
+
+module.exports = { Diary, schemas };
+

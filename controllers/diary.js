@@ -1,7 +1,7 @@
+const { HttpError, ctrlWrapper } = require("../helpers");
 const { Product } = require("../models/Product");
 const { Diary } = require("../models/diary");
 const { Exercise } = require("../models/exercises");
-const { User } = require("../models/user");
 
 const postExerciseToDiary = async (req, res, next) => {
   const {
@@ -19,7 +19,7 @@ const postExerciseToDiary = async (req, res, next) => {
     diaryItem = await Diary.create({ date, owner: _id, DSN, BMR });
   }
   const { bodyPart, equipment, name, target } = await Exercise.findById(
-    exerciseId,
+    exerciseId
   );
   diaryItem = await Diary.findByIdAndUpdate(
     diaryItem._id,
@@ -28,7 +28,7 @@ const postExerciseToDiary = async (req, res, next) => {
         exercises: { bodyPart, equipment, name, target, time, burnedCalories },
       },
     },
-    { new: true },
+    { new: true }
   );
 
   res.json(diaryItem);
@@ -50,7 +50,7 @@ const postProductsToDiary = async (req, res, next) => {
     diaryItem = await Diary.create({ date, owner: _id, DSN, BMR });
   }
   const { title, category, groupBloodNotAllowed } = await Product.findById(
-    productId,
+    productId
   );
 
   diaryItem = await Diary.findByIdAndUpdate(
@@ -66,12 +66,33 @@ const postProductsToDiary = async (req, res, next) => {
         },
       },
     },
-    { new: true },
+    { new: true }
   );
 
   res.json(diaryItem);
 };
 
+const deleteProductsFromDiary = async (req, res, next) => {
+  const { _id } = req.user;
+  const { date, itemid } = req.body;
+
+  let diaryItem = await Diary.findOne({ date, owner: _id });
+
+  if (!diaryItem) {
+    throw HttpError(404, "Diary not found");
+  }
+
+  diaryItem = await Diary.findByIdAndUpdate(
+    diaryItem._id,
+    {
+      $pull: {
+        products: { _id: itemid },
+      },
+    },
+    { new: true }
+  );
+  res.json(diaryItem);
+};
 
 const diaryByDate = async (req, res) => {
   const {
@@ -96,4 +117,9 @@ const diaryByDate = async (req, res) => {
   }
   res.json(diaryItem);
 };
-module.exports = { postExerciseToDiary, postProductsToDiary, diaryByDate };
+module.exports = {
+  postExerciseToDiary: ctrlWrapper(postExerciseToDiary),
+  postProductsToDiary: ctrlWrapper(postProductsToDiary),
+  diaryByDate: ctrlWrapper(diaryByDate),
+  deleteProductsFromDiary: ctrlWrapper(deleteProductsFromDiary),
+};

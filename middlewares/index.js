@@ -1,6 +1,7 @@
 const validateBody = require("./validateBody");
 const validateQuery = require("./validateQuery");
 const isValidId = require("./isValidId");
+// const upload = require("./upload_old");
 const upload = require("./upload");
 const resizeAvatar = require("./resizeAvatar");
 const isSingleFileExist = require("./isSingleFileExist");

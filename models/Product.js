@@ -1,7 +1,6 @@
 const { Schema, model } = require("mongoose");
-// const Joi = require("joi");
-
 const { handleMongooseError } = require("../helpers");
+const Joi = require("joi");
 
 const groupBloodNotAllowedSchema = new Schema(
   {
@@ -51,4 +50,16 @@ productSchema.post("save", handleMongooseError);
 
 const Product = model("products", productSchema);
 
-module.exports = { Product };
+const getProductsSearchQuery = Joi.object({
+  q: Joi.string(),
+  catgory: Joi.string(),
+  limit: Joi.number().min(1),
+  page: Joi.number().min(0),
+  recommend: Joi.boolean(),
+}).unknown();
+
+const schemas = {
+  getProductsSearchQuery,
+};
+
+module.exports = { Product, schemas };
