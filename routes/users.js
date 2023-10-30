@@ -43,4 +43,8 @@ router.put(
   ctrl.updateProfile
 );
 
+router.get("/google", ctrl.googleAuth);
+
+router.get("/google-redirect", ctrl.googleRedirect);
+
 module.exports = router;

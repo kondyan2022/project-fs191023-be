@@ -11,6 +11,8 @@ const jwt = require("jsonwebtoken");
 const path = require("path");
 const fs = require("fs/promises");
 const { nanoid } = require("nanoid");
+const queryString = require("query-string");
+const axios = require("axios");
 
 const DEFAULT_AVATAR =
   "https://res.cloudinary.com/dfhl9z7ez/image/upload/v1698618013/avatars/noavatar.png";
@@ -50,8 +52,7 @@ const registration = async (req, res) => {
   //await sendEmailElastic(verifyEmail);
   const payload = { id: newUser._id };
 
-
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
   await User.findByIdAndUpdate(newUser._id, { token });
 
   res.status(201).json({
@@ -183,6 +184,61 @@ const updateProfile = async (req, res) => {
   res.json(user);
 };
 
+const googleAuth = async (req, res, next) => {
+  const stringifiedParams = queryString.stringify({
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    redirect_uri: `${process.env.BASE_URL}/users/google-redirect`,
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile",
+    ].join(" "),
+    response_type: "code",
+    access_type: "offline",
+    prompt: "consent",
+  });
+  console.log(
+    `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
+  );
+  return res.redirect(
+    `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
+  );
+};
+
+const googleRedirect = async (req, res, next) => {
+  const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+  const urlObj = new URL(fullUrl);
+  const urlParams = queryString.parse(urlObj.search);
+  const code = urlParams.code;
+  console.log({ code });
+  const tokenData = await axios({
+    url: `https://oauth2.googleapis.com/token`,
+    method: "post",
+    data: {
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      redirect_uri: `${process.env.BASE_URL}/users/google-redirect`,
+      grant_type: "authorization_code",
+      code,
+    },
+  });
+  console.log(tokenData.data.access_token);
+  const userData = await axios({
+    url: "https://www.googleapis.com/oauth2/v2/userinfo",
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${tokenData.data.access_token}`,
+    },
+  });
+  // userData.data.email
+  // ...
+  // ...
+  // ...
+  // return res.redirect(
+  //   `${process.env.FRONTEND_URL}?email=${userData.data.email}`
+  // );
+  res.json(userData.data);
+};
+
 module.exports = {
   registration: ctrlWrapper(registration),
   login: ctrlWrapper(login),
@@ -192,4 +248,6 @@ module.exports = {
   logout: ctrlWrapper(logout),
   updateAvatar: ctrlWrapper(updateAvatar),
   updateProfile: ctrlWrapper(updateProfile),
+  googleAuth: ctrlWrapper(googleAuth),
+  googleRedirect: ctrlWrapper(googleRedirect),
 };
