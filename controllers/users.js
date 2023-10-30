@@ -45,8 +45,9 @@ const registration = async (req, res) => {
 
   //await sendEmail(verifyEmail);
   //await sendEmailElastic(verifyEmail);
-
+ console.log(newUser);
   const payload = { id: newUser._id };
+
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   await User.findByIdAndUpdate(newUser._id, { token });

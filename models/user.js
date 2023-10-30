@@ -107,9 +107,9 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Verify token is required"],
     },
-    profile: {
-      type: profileSchema,
-    },
+    // profile: {
+    //   type: profileSchema,
+    // },
   },
   { versionKey: false, timestamps: true }
 );
