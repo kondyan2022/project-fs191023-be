@@ -94,6 +94,29 @@ const deleteProductsFromDiary = async (req, res, next) => {
   res.json(diaryItem);
 };
 
+
+const deleteExercisesFromDiary = async (req, res, next) => {
+  const { _id } = req.user;
+  const { date, exerciseId } = req.body;
+
+  let diaryItem = await Diary.findOne({ date, owner: _id });
+
+  if (!diaryItem) {
+    throw HttpError(404, "Diary not found");
+  }
+
+  diaryItem = await Diary.findByIdAndUpdate(
+    diaryItem._id,
+    {
+      $pull: {
+        exercises: { _id: exerciseId },
+      },
+    },
+    { new: true }
+  );
+  res.json(diaryItem);
+};
+
 const diaryByDate = async (req, res) => {
   const {
     _id,
@@ -124,4 +147,5 @@ module.exports = {
   postProductsToDiary: ctrlWrapper(postProductsToDiary),
   diaryByDate: ctrlWrapper(diaryByDate),
   deleteProductsFromDiary: ctrlWrapper(deleteProductsFromDiary),
+  deleteExercisesFromDiary: ctrlWrapper(deleteExercisesFromDiary),
 };
