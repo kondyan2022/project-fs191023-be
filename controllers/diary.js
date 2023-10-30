@@ -113,6 +113,8 @@ const diaryByDate = async (req, res) => {
       burnedCalories: 0,
       consumedCalories: 0,
       doneExercisesTime: 0,
+      leftExercisesTime: 0,
+      leftCalories: 0,
     };
   }
   res.json(diaryItem);
