@@ -48,7 +48,6 @@ const registration = async (req, res) => {
 
   //await sendEmail(verifyEmail);
   //await sendEmailElastic(verifyEmail);
- console.log(newUser);
   const payload = { id: newUser._id };
 
 
