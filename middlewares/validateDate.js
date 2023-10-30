@@ -11,21 +11,27 @@ const getDateParts = (dateObj) => {
 
 const validateDate = (req, res, next) => {
       const { date } = req.body;
-      if(date) {
-        let formattedDate = '';
-        if (typeof date === 'string') {
-          const dateObj = new Date(date);
-          if(isNaN(dateObj.getTime())) return next(HttpError(400, 'Invalid date format'));
-          const { year, month, day } = getDateParts(dateObj);
-          formattedDate = `${year}${month}${day}`;
-        }
-        else if (date instanceof Date) {
-          const { year, month, day } = getDateParts(date);
-          formattedDate = `${year}${month}${day}`;
-        }
-        req.body.date = formattedDate;
+      const regex =  /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19[0-9][0-9]|20[012][0-9])$/
+      let dateForm;
+      if(regex.test(date)) {
+        console.log('We find correct date version 1!');
+
+        dateForm = date.slice(6) + date.slice(3, 5) + date.slice(0, 2);
+        console.log(dateForm);
       }
-      next();
+      else {
+
+          const dateObj = new Date(date).toString();
+          console.log(dateObj);
+          if(dateObj === 'Invalid Date') return next(HttpError(400, 'Invalid date format'));
+          
+          const { year, month, day } = getDateParts(dateObj);
+          
+          dateForm = `${year}/${month}/${day}`;       
+          console.log(dateForm);
+      }
+      req.body = { ...req.body, date: dateForm };
+      next();     
 }
 
 
