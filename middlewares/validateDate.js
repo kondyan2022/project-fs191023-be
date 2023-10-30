@@ -16,7 +16,7 @@ const validateDate = (req, res, next) => {
       if(regex.test(date)) {
         console.log('We find correct date version 1!');
 
-        dateForm = date.slice();
+        dateForm = date.slice(6) + date.slice(3, 5) + date.slice(0, 2);
         console.log(dateForm);
       }
       else {
@@ -27,12 +27,11 @@ const validateDate = (req, res, next) => {
           
           const { year, month, day } = getDateParts(dateObj);
           
-          dateForm = dateObj;
+          dateForm = `${year}/${month}/${day}`;       
           console.log(dateForm);
       }
       req.body = { ...req.body, date: dateForm };
-      res.json({date});
-      // next();     
+      next();     
 }
 
 
