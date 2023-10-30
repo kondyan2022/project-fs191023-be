@@ -1,9 +1,10 @@
 const express = require("express");
 const {
   authentificate,
-  validateDate,
   validateBody,
   validateQuery,
+  isUserHaveProfile,
+  validateAndConvertDateBody,
 } = require("../middlewares");
 const ctrl = require("../controllers/diary");
 const { schemas } = require("../models/diary");
@@ -14,23 +15,40 @@ const router = express.Router();
 router.get(
   "/:date",
   authentificate,
-  validateDate,
+  isUserHaveProfile,
   validateParams(schemas.getDiarySchemaParams),
   ctrl.diaryByDate
 );
 router.post(
   "/exercise",
+  validateAndConvertDateBody,
   authentificate,
-  validateDate,
+  isUserHaveProfile,
   validateBody(schemas.addExerciseSchema),
-  ctrl.postExerciseToDiary);
+  ctrl.postExerciseToDiary
+);
 router.post(
   "/product",
+  validateAndConvertDateBody,
   authentificate,
-  validateDate,
+  isUserHaveProfile,
   validateBody(schemas.addProductSchema),
-  ctrl.postProductsToDiary);
-router.delete("/product", authentificate, ctrl.deleteProductsFromDiary);
-router.delete("/exercise", authentificate, ctrl.deleteProductsFromDiary);
+  ctrl.postProductsToDiary
+);
+router.delete(
+  "/product",
+   validateAndConvertDateBody,
+  authentificate,
+  isUserHaveProfile,
+  ctrl.deleteProductsFromDiary
+);
+
+router.delete(
+  "/product",
+   validateAndConvertDateBody,
+  authentificate,
+  isUserHaveProfile,
+  ctrl.deleteProductsFromDiary
+);
 
 module.exports = router;

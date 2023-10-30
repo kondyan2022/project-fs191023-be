@@ -18,9 +18,12 @@ const postExerciseToDiary = async (req, res, next) => {
   if (!diaryItem) {
     diaryItem = await Diary.create({ date, owner: _id, DSN, BMR });
   }
-  const { bodyPart, equipment, name, target } = await Exercise.findById(
-    exerciseId
-  );
+  const exercise = await Exercise.findById(exerciseId);
+  if (!exercise) {
+    throw HttpError(404, `Exersice with id=${exerciseId} not found"`);
+  }
+
+  const { bodyPart, equipment, name, target } = exercise;
   diaryItem = await Diary.findByIdAndUpdate(
     diaryItem._id,
     {
@@ -49,10 +52,12 @@ const postProductsToDiary = async (req, res, next) => {
   if (!diaryItem) {
     diaryItem = await Diary.create({ date, owner: _id, DSN, BMR });
   }
-  const { title, category, groupBloodNotAllowed } = await Product.findById(
-    productId
-  );
+  const product = await Product.findById(productId);
+  if (!product) {
+    throw HttpError(400, `Product with id=${productId} not found`);
+  }
 
+  const { title, category, groupBloodNotAllowed } = product;
   diaryItem = await Diary.findByIdAndUpdate(
     diaryItem._id,
     {
