@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get(
   "/:date",
-  validateAndConvertDateBody,
+  authentificate,
   isUserHaveProfile,
   validateParams(schemas.getDiarySchemaParams),
   ctrl.diaryByDate
@@ -37,6 +37,15 @@ router.post(
 );
 router.delete(
   "/product",
+   validateAndConvertDateBody,
+  authentificate,
+  isUserHaveProfile,
+  ctrl.deleteProductsFromDiary
+);
+
+router.delete(
+  "/product",
+   validateAndConvertDateBody,
   authentificate,
   isUserHaveProfile,
   ctrl.deleteProductsFromDiary
