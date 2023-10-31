@@ -99,6 +99,7 @@ const userSchema = new Schema(
     },
     avatarURL: String,
     token: String,
+    googleRedirected: { type: Boolean, default: false },
     verify: {
       type: Boolean,
       default: false,

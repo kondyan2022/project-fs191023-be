@@ -99,10 +99,9 @@ const deleteProductsFromDiary = async (req, res, next) => {
   res.json(diaryItem);
 };
 
-
 const deleteExercisesFromDiary = async (req, res, next) => {
   const { _id } = req.user;
-  const { date, exerciseId } = req.body;
+  const { date, itemid } = req.body;
 
   let diaryItem = await Diary.findOne({ date, owner: _id });
 
@@ -114,7 +113,7 @@ const deleteExercisesFromDiary = async (req, res, next) => {
     diaryItem._id,
     {
       $pull: {
-        exercises: { _id: exerciseId },
+        exercises: { _id: itemid },
       },
     },
     { new: true }
