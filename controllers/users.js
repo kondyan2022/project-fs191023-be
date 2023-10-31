@@ -269,10 +269,8 @@ const googleRedirect = async (req, res, next) => {
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   await User.findByIdAndUpdate(user._id, { token });
-
-  return res.redirect(
-    `${process.env.FRONTEND_URL}/signin/google-login?email=${email}`
-  );
+  console.log(process.env.FRONTEND_URL);
+  return res.redirect(`${process.env.FRONTEND_URL}/googlelogin?email=${email}`);
   res.json(userData.data);
 };
 

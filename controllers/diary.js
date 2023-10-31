@@ -1,4 +1,4 @@
-const { HttpError, ctrlWrapper } = require("../helpers");
+const { HttpError, ctrlWrapper, reverseDate } = require("../helpers");
 const { Product } = require("../models/Product");
 const { Diary } = require("../models/diary");
 const { Exercise } = require("../models/exercises");
@@ -33,7 +33,7 @@ const postExerciseToDiary = async (req, res, next) => {
     },
     { new: true }
   );
-
+  diaryItem.date = reverseDate(diaryItem.date);
   res.json(diaryItem);
 };
 
@@ -73,7 +73,7 @@ const postProductsToDiary = async (req, res, next) => {
     },
     { new: true }
   );
-
+  diaryItem.date = reverseDate(diaryItem.date);
   res.json(diaryItem);
 };
 
@@ -96,6 +96,7 @@ const deleteProductsFromDiary = async (req, res, next) => {
     },
     { new: true }
   );
+  diaryItem.date = reverseDate(diaryItem.date);
   res.json(diaryItem);
 };
 
@@ -118,6 +119,7 @@ const deleteExercisesFromDiary = async (req, res, next) => {
     },
     { new: true }
   );
+  diaryItem.date = reverseDate(diaryItem.date);
   res.json(diaryItem);
 };
 
@@ -127,7 +129,6 @@ const diaryByDate = async (req, res) => {
     profile: { DSN, BMR },
   } = req.user;
   const { date } = req.params;
-
   let diaryItem = await Diary.findOne({ date, owner: _id });
   if (!diaryItem) {
     diaryItem = {
@@ -144,6 +145,7 @@ const diaryByDate = async (req, res) => {
       leftCalories: 0,
     };
   }
+  diaryItem.date = reverseDate(diaryItem.date);
   res.json(diaryItem);
 };
 
