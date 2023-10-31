@@ -37,7 +37,7 @@ router.post(
 );
 router.delete(
   "/product",
-   validateAndConvertDateBody,
+  validateAndConvertDateBody,
   authentificate,
   isUserHaveProfile,
   ctrl.deleteProductsFromDiary
@@ -45,7 +45,7 @@ router.delete(
 
 router.delete(
   "/product",
-   validateAndConvertDateBody,
+  validateAndConvertDateBody,
   authentificate,
   isUserHaveProfile,
   ctrl.deleteProductsFromDiary

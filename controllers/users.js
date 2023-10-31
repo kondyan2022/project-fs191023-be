@@ -16,10 +16,9 @@ const axios = require("axios");
 
 const DEFAULT_AVATAR =
   "https://res.cloudinary.com/dfhl9z7ez/image/upload/v1698618013/avatars/noavatar.png";
-
 const { SECRET_KEY, BASE_URL } = process.env;
 
-const avatarsDir = path.join(__dirname, "../", "public", "avatars");
+// const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
 const registration = async (req, res) => {
   const { name, email, password } = req.body;
@@ -52,7 +51,7 @@ const registration = async (req, res) => {
   //await sendEmailElastic(verifyEmail);
   const payload = { id: newUser._id };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   await User.findByIdAndUpdate(newUser._id, { token });
 
   res.status(201).json({
@@ -209,7 +208,6 @@ const googleRedirect = async (req, res, next) => {
   const urlObj = new URL(fullUrl);
   const urlParams = queryString.parse(urlObj.search);
   const code = urlParams.code;
-  console.log({ code });
   const tokenData = await axios({
     url: `https://oauth2.googleapis.com/token`,
     method: "post",
@@ -221,7 +219,6 @@ const googleRedirect = async (req, res, next) => {
       code,
     },
   });
-  console.log(tokenData.data.access_token);
   const userData = await axios({
     url: "https://www.googleapis.com/oauth2/v2/userinfo",
     method: "get",
@@ -229,13 +226,29 @@ const googleRedirect = async (req, res, next) => {
       Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   });
-  // userData.data.email
-  // ...
-  // ...
-  // ...
-  // return res.redirect(
-  //   `${process.env.FRONTEND_URL}?email=${userData.data.email}`
-  // );
+  const { email, name, picture } = userData.data;
+  let user = await User.findOne({ email });
+  if (!user) {
+    const hashPassword = await bcrypt.hash(nanoid(), 10);
+    const avatarURL = picture;
+    const verificationToken = nanoid(); // Токен при verify = true не має значення
+    const verify = true; //Email - вважаємо перевірено при створенні
+
+    user = await User.create({
+      name,
+      email,
+      avatarURL,
+      password: hashPassword,
+      verificationToken,
+      verify,
+    });
+  }
+
+  const payload = { id: user._id };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  await User.findByIdAndUpdate(user._id, { token });
+
+  return res.redirect(`${process.env.FRONTEND_URL}?email=${email}`);
   res.json(userData.data);
 };
 
