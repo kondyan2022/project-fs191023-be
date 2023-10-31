@@ -17,7 +17,8 @@ const validateAndConvertDateBody = (req, res, next) => {
     dateForm = date.slice(6) + date.slice(3, 5) + date.slice(0, 2);
   } else {
     const dateObj = new Date(date);
-    if (dateObj === "Invalid Date") {
+    console.log(dateObj);
+    if (dateObj == "Invalid Date") {
       return next(HttpError(400, "Invalid date format"));
     }
     const { year, month, day } = getDateParts(dateObj);
