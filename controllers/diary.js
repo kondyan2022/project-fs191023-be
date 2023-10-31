@@ -146,6 +146,7 @@ const diaryByDate = async (req, res) => {
   }
   res.json(diaryItem);
 };
+
 module.exports = {
   postExerciseToDiary: ctrlWrapper(postExerciseToDiary),
   postProductsToDiary: ctrlWrapper(postProductsToDiary),
