@@ -81,7 +81,7 @@ const userSchema = new Schema(
       type: String,
       // validate: {
       //   validator: function (v) {
-      //     console.log("Check name", v);
+      //
       //     return v.length > 4;
       //   },
       //   message: (props) => `${props.value} is not valid`,
@@ -119,7 +119,7 @@ userSchema.post("save", handleMongooseError);
 
 userSchema.pre("findOneAndUpdate", function (next) {
   const { profile } = this.getUpdate();
-  console.log(profile);
+
   if (profile) {
     const birthday = new Date(profile.birthday);
     birthday.setFullYear(birthday.getFullYear() + 18);

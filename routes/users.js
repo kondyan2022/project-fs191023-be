@@ -46,6 +46,6 @@ router.put(
 router.get("/google", ctrl.googleAuth);
 
 router.get("/google-redirect", ctrl.googleRedirect);
-router.get("/googlelogin", ctrl.googleLogin);
+router.post("/googlelogin", ctrl.googleLogin);
 
 module.exports = router;

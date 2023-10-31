@@ -94,6 +94,7 @@ const login = async (req, res) => {
 };
 
 const googleLogin = async (req, res) => {
+  const { email } = req.body;
   let user = await User.findOne({ email });
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
@@ -268,8 +269,8 @@ const googleRedirect = async (req, res, next) => {
 
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-  await User.findByIdAndUpdate(user._id, { token });
-  console.log(process.env.FRONTEND_URL);
+  await User.findByIdAndUpdate(user._id, { token, googleRedirected: true });
+
   return res.redirect(`${process.env.FRONTEND_URL}/googlelogin?email=${email}`);
   res.json(userData.data);
 };
