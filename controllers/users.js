@@ -79,16 +79,39 @@ const login = async (req, res) => {
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   user = await User.findByIdAndUpdate(
     user._id,
-    { token },
+    { token, googleRedirected: false },
     {
       new: true,
       select:
-        "-createdAt -updatedAt -password -token -verify -verificationToken",
+        "-createdAt -updatedAt -password -token -verify -verificationToken -googleRedirected",
     }
   );
   res.json({
     token,
     // user: { email: user.email, avatarURL: user.avatarURL },
+    user,
+  });
+};
+
+const googleLogin = async (req, res) => {
+  let user = await User.findOne({ email });
+  if (!user) {
+    throw HttpError(401, "Email or password is wrong");
+  }
+  const payload = { id: user._id };
+
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  user = await User.findByIdAndUpdate(
+    user._id,
+    { token, googleRedirected: false },
+    {
+      new: true,
+      select:
+        "-createdAt -updatedAt -password -token -verify -verificationToken -googleRedirected",
+    }
+  );
+  res.json({
+    token,
     user,
   });
 };
@@ -135,8 +158,6 @@ const getCurrent = (req, res) => {
   res.json({ _id, name, email, avatarURL, profile });
 };
 
-// "-createdAt -updatedAt -password -token -verify -verificationToken";
-
 const logout = async (req, res) => {
   const { _id } = req.user;
   await User.findByIdAndUpdate(_id, { token: "" });
@@ -178,7 +199,8 @@ const updateProfile = async (req, res) => {
   const { _id } = req.user;
   const user = await User.findByIdAndUpdate(_id, req.body, {
     new: true,
-    select: "-createdAt -updatedAt -password -token -verify -verificationToken",
+    select:
+      "-createdAt -updatedAt -password -token -verify -verificationToken -googleRedirected",
   });
   res.json(user);
 };
@@ -265,4 +287,5 @@ module.exports = {
   updateProfile: ctrlWrapper(updateProfile),
   googleAuth: ctrlWrapper(googleAuth),
   googleRedirect: ctrlWrapper(googleRedirect),
+  googleLogin: ctrlWrapper(googleLogin),
 };
