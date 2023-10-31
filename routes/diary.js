@@ -44,11 +44,11 @@ router.delete(
 );
 
 router.delete(
-  "/product",
+  "/exercise",
   validateAndConvertDateBody,
   authentificate,
   isUserHaveProfile,
-  ctrl.deleteProductsFromDiary
+  ctrl.deleteExercisesFromDiary
 );
 
 module.exports = router;
