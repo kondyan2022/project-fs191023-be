@@ -236,7 +236,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateUserReqest" }
+              "schema": { "$ref": "#/components/schemas/UpdateUserRequest" }
             }
           }
         },
@@ -300,52 +300,22 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "You are got exercises list",
+            "description": "You got exercises list",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "bodyPart": {
-                        "type": "string",
-                        "example": "Legs"
-                      },
-                      "equipment": {
-                        "type": "string",
-                        "example": "Dumbbells"
-                      },
-                      "gifUrl": {
-                        "type": "string",
-                        "example": "https://example.com/exercise.gif"
-                      },
-                      "name": {
-                        "type": "string",
-                        "example": "Squat"
-                      },
-                      "target": {
-                        "type": "string",
-                        "example": "Strength"
-                      },
-                      "burnedCalories": {
-                        "type": "number",
-                        "format": "float",
-                        "example": 250.5
-                      },
-                      "time": {
-                        "type": "number",
-                        "format": "int32",
-                        "example": 30
-                      }
-                    }
-                  }
-                }
+                "schema": { "$ref": "#/components/schemas/ExerciseResponse" }
               }
             }
           },
           "404": {
-            "description": "There won't be a list of exercises, something went wrong."
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -361,31 +331,19 @@
             "description": "You are got filters list",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "filter": {
-                        "type": "string",
-                        "example": "Legs"
-                      },
-                      "name": {
-                        "type": "string",
-                        "example": "Aboba"
-                      },
-                      "imgURL": {
-                        "type": "string",
-                        "example": "https://example.com/exercise.jpg"
-                      }
-                    }
-                  }
-                }
+                "schema": { "$ref": "#/components/schemas/ExerciseGroupsResponse" }
               }
             }
           },
           "404": {
-            "description": "There won't be a list of exercises, something went wrong."
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -432,7 +390,7 @@
         ],
         "responses": {
           "200": {
-            "description": "You are got page of exercises list with paination data",
+            "description": "You are got page of exercises list with pagination data",
             "content": {
               "application/json": {
                 "schema": {
@@ -475,10 +433,10 @@
                             "type": "string"
                           },
                           "burnedCalories": {
-                            "type": "number"
+                            "type": "integer"
                           },
                           "time": {
-                            "type": "number"
+                            "type": "integer"
                           }
                         }
                       }
@@ -511,12 +469,11 @@
             }
           },
           "404": {
-            "description": "There won't be a list of exercises, something went wrong."
+            "description": "Not found"
           }
         }
       }
     },
-
     "/diary/{date}": {
       "get": {
         "tags": ["Diary"],
@@ -620,56 +577,19 @@
             "description": "You get products",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "weight": {
-                        "type": "number",
-                        "example": "100"
-                      },
-                      "calories": {
-                        "type": "number",
-                        "example": "300"
-                      },
-                      "category": {
-                        "type": "string",
-                        "example": "vegetables and herbs"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "Salads Belaya Dacha Delicate root"
-                      },
-                      "groupBloodNotAllowed": {
-                        "type": "object",
-                        "properties": {
-                          "1": {
-                            "type": "boolean",
-                            "example": "true"
-                          },
-                          "2": {
-                            "type": "boolean",
-                            "example": "true"
-                          },
-                          "3": {
-                            "type": "boolean",
-                            "example": "true"
-                          },
-                          "4": {
-                            "type": "boolean",
-                            "example": "true"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
+                "schema": { "$ref": "#/components/schemas/ProductsResponse" }
               }
             }
           },
           "404": {
-            "description": "There aren't products, something went wrong."
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -685,23 +605,19 @@
             "description": "You get a list of products",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string",
-                        "example": "alcoholic drinks"
-                      }
-                    }
-                  }
-                }
+                "schema": { "$ref": "#/components/schemas/ProductsListResponse" }
               }
             }
           },
           "404": {
-            "description": "There won't be a list of products, something went wrong."
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -747,7 +663,7 @@
         ],
         "responses": {
           "200": {
-            "description": "You are got page of exercises list with paination data",
+            "description": "You are got page of exercises list with pagination data",
             "content": {
               "application/json": {
                 "schema": {
@@ -767,11 +683,11 @@
                         "properties": {
                           "_id": { "type": "string" },
                           "weight": {
-                            "type": "number",
+                            "type": "integer",
                             "example": "100"
                           },
                           "calories": {
-                            "type": "number",
+                            "type": "integer",
                             "example": "300"
                           },
                           "category": {
@@ -820,9 +736,8 @@
     "/stats/": {
       "get": {
         "tags": ["Statistics"],
-        "summary": "Total staistic",
+        "summary": "Total statistic",
         "parameters": [],
-
         "responses": {
           "200": {
             "description": "Statistics power plus",
@@ -854,19 +769,19 @@
         ],
         "properties": {
           "height": {
-            "type": "number",
+            "type": "integer",
             "description": "user height",
             "minimum": 150,
             "example": 170
           },
           "currentWeight": {
-            "type": "number",
+            "type": "integer",
             "description": "current user weight",
             "minimum": 35,
             "example": 85
           },
           "desiredWeight": {
-            "type": "number",
+            "type": "integer",
             "description": "current user weight",
             "minimum": 35,
             "example": 70
@@ -878,7 +793,7 @@
             "example": "2000-12-20T00:00:00.000Z"
           },
           "blood": {
-            "type": "number",
+            "type": "integer",
             "description": "Blood type",
             "enum": [1, 2, 3, 4],
             "example": 4
@@ -890,18 +805,18 @@
             "example": "male"
           },
           "levelActivity": {
-            "type": "number",
+            "type": "integer",
             "description": "Level activity",
             "enum": [1, 2, 3, 4, 5],
             "example": 3
           },
           "DSN": {
-            "type": "number",
+            "type": "integer",
             "description": "Time for exercises per day ",
             "example": 110
           },
           "BMR": {
-            "type": "number",
+            "type": "integer",
             "description": "calories intake limit",
             "example": 4832
           }
@@ -1031,19 +946,19 @@
                 ],
                 "properties": {
                   "height": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "user height",
                     "minimum": 150,
                     "example": 170
                   },
                   "currentWeight": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "current user weight",
                     "minimum": 35,
                     "example": 85
                   },
                   "desiredWeight": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "current user weight",
                     "minimum": 35,
                     "example": 70
@@ -1055,7 +970,7 @@
                     "example": "2000-12-20T00:00:00.000Z"
                   },
                   "blood": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "Blood type",
                     "enum": [1, 2, 3, 4],
                     "example": 4
@@ -1067,18 +982,18 @@
                     "example": "male"
                   },
                   "levelActivity": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "Level activity",
                     "enum": [1, 2, 3, 4, 5],
                     "example": 3
                   },
                   "DSN": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "Time for exercises per day ",
                     "example": 110
                   },
                   "BMR": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "calories intake limit",
                     "example": 4832
                   }
@@ -1137,19 +1052,19 @@
             ],
             "properties": {
               "height": {
-                "type": "number",
+                "type": "integer",
                 "description": "user height",
                 "minimum": 150,
                 "example": 170
               },
               "currentWeight": {
-                "type": "number",
+                "type": "integer",
                 "description": "current user weight",
                 "minimum": 35,
                 "example": 85
               },
               "desiredWeight": {
-                "type": "number",
+                "type": "integer",
                 "description": "current user weight",
                 "minimum": 35,
                 "example": 70
@@ -1161,7 +1076,7 @@
                 "example": "2000-12-20T00:00:00.000Z"
               },
               "blood": {
-                "type": "number",
+                "type": "integer",
                 "description": "Blood type",
                 "enum": [1, 2, 3, 4],
                 "example": 4
@@ -1173,18 +1088,18 @@
                 "example": "male"
               },
               "levelActivity": {
-                "type": "number",
+                "type": "integer",
                 "description": "Level activity",
                 "enum": [1, 2, 3, 4, 5],
                 "example": 3
               },
               "DSN": {
-                "type": "number",
+                "type": "integer",
                 "description": "Time for exercises per day ",
                 "example": 110
               },
               "BMR": {
-                "type": "number",
+                "type": "integer",
                 "description": "calories intake limit",
                 "example": 4832
               }
@@ -1192,7 +1107,7 @@
           }
         }
       },
-      "UpdateUserReqest": {
+      "UpdateUserRequest": {
         "type": "object",
         "required": ["_id", "name", "email", "avatarURL"],
         "properties": {
@@ -1207,19 +1122,19 @@
             ],
             "properties": {
               "height": {
-                "type": "number",
+                "type": "integer",
                 "description": "user height",
                 "minimum": 150,
                 "example": 170
               },
               "currentWeight": {
-                "type": "number",
+                "type": "integer",
                 "description": "current user weight",
                 "minimum": 35,
                 "example": 85
               },
               "desiredWeight": {
-                "type": "number",
+                "type": "integer",
                 "description": "current user weight",
                 "minimum": 35,
                 "example": 70
@@ -1231,7 +1146,7 @@
                 "example": "2000-12-20T00:00:00.000Z"
               },
               "blood": {
-                "type": "number",
+                "type": "integer",
                 "description": "Blood type",
                 "enum": [1, 2, 3, 4],
                 "example": 4
@@ -1243,7 +1158,7 @@
                 "example": "male"
               },
               "levelActivity": {
-                "type": "number",
+                "type": "integer",
                 "description": "Level activity",
                 "enum": [1, 2, 3, 4, 5],
                 "example": 3
@@ -1252,6 +1167,125 @@
           }
         }
       },
+      "ExerciseResponse": {
+        "type": "object",
+        "properties": {
+          "bodyPart": {
+            "type": "string",
+            "description": "Body part",
+            "example": "Legs"
+          },
+          "equipment": {
+            "type": "string",
+            "description": "Equipment",
+            "example": "Dumbbells"
+          },
+          "gifUrl": {
+            "type": "string",
+            "description": "Gif",
+            "example": "https://example.com/exercise.gif"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of exercise",
+            "example": "Squat"
+          },
+          "target": {
+            "type": "string",
+            "description": "Target of exercise",
+            "example": "Strength"
+          },
+          "burnedCalories": {
+            "type": "number",
+            "description": "Quantity of burned calories",
+            "example": 250
+          },
+          "time": {
+            "type": "integer",
+            "description": "Time of exercise",
+            "example": 30
+          }
+        }
+      },
+      "ExerciseGroupsResponse": {
+        "type": "object",
+        "properties": {
+          "filter": {
+            "type": "string",
+            "description": "Filter for exercise group",
+            "example": "Legs"
+          },
+          "name": {
+            "type": "string",
+            "description": "Title of exercise group",
+            "example": "Aboba"
+          },
+          "imgURL": {
+            "type": "string",
+            "description": "Image of exercise group",
+            "example": "https://example.com/exercise.jpg"
+          }
+        }
+      }, 
+      "ProductsResponse": {
+        "type": "object",
+        "required": ["groupBloodNotAllowed"],
+        "properties": {
+          "weight": {
+            "type": "integer",
+            "description": "Weight of product",
+            "example": "100"
+          },
+          "calories": {
+            "type": "integer",
+            "description": "Quantity of calories",
+            "example": "300"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of product",
+            "example": "vegetables and herbs"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of product",
+            "example": "Salads Belaya Dacha Delicate root"
+          },
+          "groupBloodNotAllowed": {
+            "type": "object",
+            "description": "Product is allowed or not for certain type of blood group",
+            "properties": {
+              "1": {
+                "type": "boolean",
+                "example": "true"
+              },
+              "2": {
+                "type": "boolean",
+                "example": "true"
+              },
+              "3": {
+                "type": "boolean",
+                "example": "true"
+              },
+              "4": {
+                "type": "boolean",
+                "example": "true"
+              }
+            }
+          }
+        }
+      }, 
+      "ProductsListResponse": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Title of products list",
+              "example": "alcoholic drinks"
+            }
+          }
+      },    
       "ErrorResponse": {
         "type": "object",
         "properties": {
@@ -1271,3 +1305,11 @@
     }
   }
 }
+
+
+
+
+
+
+
+
