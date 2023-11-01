@@ -331,7 +331,9 @@
             "description": "You are got filters list",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ExerciseGroupsResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseGroupsResponse"
+                }
               }
             }
           },
@@ -474,6 +476,7 @@
         }
       }
     },
+
     "/diary/{date}": {
       "get": {
         "tags": ["Diary"],
@@ -484,7 +487,7 @@
           {
             "name": "date",
             "in": "path",
-            "description": "Date in the format monthdayyear (e.g., 10242023)",
+            "description": "Date in the format dd/mm/yyyy  (e.g., 24/10/2023)",
             "schema": { "type": "string" },
             "required": true
           }
@@ -496,66 +499,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "653800e44af33653569e9d93"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "www"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "karavang@gmail.com"
-                    },
-                    "avatarURL": {
-                      "type": "string",
-                      "example": "//www.gravatar.com/avatar/e620fe25eac4f8d8efc707f27f5523d7"
-                    },
-                    "profile": {
-                      "type": "object",
-                      "properties": {
-                        "height": {
-                          "type": "integer",
-                          "example": 170
-                        },
-                        "currentWeight": {
-                          "type": "integer",
-                          "example": 65
-                        },
-                        "desiredWeight": {
-                          "type": "integer",
-                          "example": 70
-                        },
-                        "birthday": {
-                          "type": "string",
-                          "format": "date",
-                          "example": "2000-12-20"
-                        },
-                        "blood": {
-                          "type": "integer",
-                          "example": 4
-                        },
-                        "sex": {
-                          "type": "string",
-                          "example": "male"
-                        },
-                        "levelActivity": {
-                          "type": "integer",
-                          "example": 3
-                        },
-                        "DSN": {
-                          "type": "integer",
-                          "example": 110
-                        },
-                        "BMR": {
-                          "type": "integer",
-                          "example": 4823
-                        }
-                      }
-                    }
-                  }
+                  "properties": {}
                 }
               }
             }
@@ -566,6 +510,44 @@
         }
       }
     },
+    "/diary/product": {
+      "post": {
+        "tags": ["Diary"],
+        "security": [{ "Bearer": [] }],
+        "summary": "Request for add  product to diary for selected date",
+        "description": "Request for add  product to diary for selected date",
+        "parameters": [],
+
+        "requestBody": {
+          "description": " ",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddProductDiaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "You are got exercises list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Something has gone wrong. Check if the date is entered and if you are making the request correctly."
+          }
+        }
+      }
+    },
+
     "/products/": {
       "get": {
         "tags": ["Products"],
@@ -605,7 +587,9 @@
             "description": "You get a list of products",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ProductsListResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ProductsListResponse"
+                }
               }
             }
           },
@@ -728,7 +712,7 @@
             }
           },
           "404": {
-            "description": "There won't be a list of exercises, something went wrong."
+            "description": "Not found"
           }
         }
       }
@@ -1226,7 +1210,7 @@
             "example": "https://example.com/exercise.jpg"
           }
         }
-      }, 
+      },
       "ProductsResponse": {
         "type": "object",
         "required": ["groupBloodNotAllowed"],
@@ -1274,18 +1258,161 @@
             }
           }
         }
-      }, 
+      },
       "ProductsListResponse": {
-          "type": "object",
-          "required": ["name"],
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Title of products list",
-              "example": "alcoholic drinks"
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Title of products list",
+            "example": "alcoholic drinks"
+          }
+        }
+      },
+      "AddProductDiaryRequest": {
+        "type": "object",
+        "required": ["product", "date", "amount", "calories"],
+        "properties": {
+          "product": {
+            "type": "string",
+            "description": "product ID id from collection",
+            "example": "5d51694902b2373622ff5773"
+          },
+          "date": {
+            "type": "string",
+            "description": "Data in format dd/mm/yyyy (e.g. 26/10/2023) || date",
+            "example": "26/10/2023"
+          },
+          "ammount": {
+            "type": "integer",
+            "description": "Product weight in gram ",
+            "example": "100"
+          },
+          "calories": {
+            "type": "integer",
+            "description": "Consumed calories",
+            "example": "345"
+          }
+        }
+      },
+      "AddExerciseDiaryRequest": {
+        "type": "object",
+        "required": ["exercise", "date", "time", "calories"],
+        "properties": {
+          "exercise": {
+            "type": "string",
+            "description": "exercise ID id from collection",
+            "example": "5d51694902b2373622ff5773"
+          },
+          "date": {
+            "type": "string",
+            "description": "Data in format dd/mm/yyyy (e.g. 26/10/2023) || date",
+            "example": "26/10/2023"
+          },
+          "time": {
+            "type": "integer",
+            "description": "Product weight in gram ",
+            "example": "180"
+          },
+          "calories": {
+            "type": "integer",
+            "description": "Consumed calories",
+            "example": "333"
+          }
+        }
+      },
+      "DiaryResponse": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Diary page ID",
+            "example": "5d51694902b2373622ff5773"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner user ID",
+            "example": "6538e3ccfc9b82da0c901910"
+          },
+
+          "date": {
+            "type": "string",
+            "description": "Data in format dd/mm/yyyy (e.g. 26/10/2023",
+            "example": "26/10/2023"
+          },
+          "DSN": {
+            "type": "integer",
+            "description": "Day sport time minimum in min. ",
+            "example": "110"
+          },
+          "BMR": {
+            "type": "integer",
+            "description": "BMR maximum consumed calories",
+            "example": "345"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Danbo cheese" },
+                "category": {
+                  "type": "string",
+                  "example": "dairy"
+                },
+                "weight": {
+                  "type": "integer",
+                  "example": 100
+                },
+                "consumeCalories": {
+                  "type": "integer",
+                  "example": 150
+                },
+                "recommend": { "type": "boolean", "example": true },
+                "_id": {
+                  "type": "string",
+                  "description": "itemid in list products",
+                  "example": "6540bdff1aef238df693f3eb"
+                }
+              }
+            }
+          },
+          "exercices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "bodyPart": { "type": "string", "example": "chest" },
+                "equipment": {
+                  "type": "string",
+                  "example": "dairy"
+                },
+                "name": { "type": "string", "example": "chest" },
+                "category": {
+                  "type": "string",
+                  "example": "dairy"
+                },
+                "target": {
+                  "type": "integer",
+                  "example": 100
+                },
+                "consumeCalories": {
+                  "type": "integer",
+                  "example": 150
+                },
+                "recommend": { "type": "boolean", "example": true },
+                "_id": {
+                  "type": "string",
+                  "description": "itemid in list products",
+                  "example": "6540bdff1aef238df693f3eb"
+                }
+              }
             }
           }
-      },    
+        }
+      },
       "ErrorResponse": {
         "type": "object",
         "properties": {
@@ -1305,11 +1432,3 @@
     }
   }
 }
-
-
-
-
-
-
-
-
