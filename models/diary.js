@@ -114,7 +114,7 @@ const diarySchema = new Schema(
               this.products.reduce(
                 (acc, { consumeCalories }) => acc + consumeCalories,
                 0
-              ) / 60
+              )
             )
           );
         },
