@@ -535,19 +535,126 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {}
+                  "$ref": "#/components/schemas/DiaryResponse"
                 }
               }
             }
           },
           "404": {
-            "description": "Something has gone wrong. Check if the date is entered and if you are making the request correctly."
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/diary/exercise": {
+      "post": {
+        "tags": ["Diary"],
+        "security": [{ "Bearer": [] }],
+        "summary": "Request for add  exercise to diary for selected date",
+        "description": "Request for add exersices to diary for selected date",
+        "parameters": [],
+
+        "requestBody": {
+          "description": " ",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddExerciseDiaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "You are got exercises list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiaryResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/diary/productdelete": {
+      "delete": {
+        "tags": ["Diary"],
+        "security": [{ "Bearer": [] }],
+        "summary": "Request for add  зкщвгсе to diary for selected date",
+        "description": "Request for add exersices to diary for selected date",
+        "parameters": [],
+
+        "requestBody": {
+          "description": " ",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteItemFromDiaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "You are got exercises list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiaryResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
           }
         }
       }
     },
 
+    "/diary/exercisedelete": {
+      "delete": {
+        "tags": ["Diary"],
+        "security": [{ "Bearer": [] }],
+        "summary": "Request for add  exercise to diary for selected date",
+        "description": "Request for add exersices to diary for selected date",
+        "parameters": [],
+
+        "requestBody": {
+          "description": " ",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteItemFromDiaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "You are got exercises list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiaryResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
     "/products/": {
       "get": {
         "tags": ["Products"],
@@ -1322,9 +1429,37 @@
           }
         }
       },
+      "DeleteItemFromDiaryRequest": {
+        "type": "object",
+        "required": ["itemid", "date"],
+        "properties": {
+          "itemid": {
+            "type": "string",
+            "description": "element id from collection",
+            "example": "5d51694902b2373622ff5773"
+          },
+          "date": {
+            "type": "string",
+            "description": "Data in format dd/mm/yyyy (e.g. 26/10/2023) || date",
+            "example": "26/10/2023"
+          }
+        }
+      },
       "DiaryResponse": {
         "type": "object",
-        "required": [],
+        "required": [
+          "_id",
+          "owner",
+          "date",
+          "DSN",
+          "BMR",
+          "products",
+          "exercices",
+          "burnedCalories",
+          "consumedCalories",
+          "leftExercisesTime",
+          "leftCalories"
+        ],
         "properties": {
           "_id": {
             "type": "string",

@@ -31,9 +31,13 @@ const postExerciseToDiary = async (req, res, next) => {
         exercises: { bodyPart, equipment, name, target, time, burnedCalories },
       },
     },
-    { new: true }
+    {
+      new: true,
+      select: "-createdAt -updatedAt ",
+    }
   );
   diaryItem.date = reverseDate(diaryItem.date);
+
   res.json(diaryItem);
 };
 
@@ -71,7 +75,10 @@ const postProductsToDiary = async (req, res, next) => {
         },
       },
     },
-    { new: true }
+    {
+      new: true,
+      select: "-createdAt -updatedAt ",
+    }
   );
   diaryItem.date = reverseDate(diaryItem.date);
   res.json(diaryItem);
@@ -94,7 +101,7 @@ const deleteProductsFromDiary = async (req, res, next) => {
         products: { _id: itemid },
       },
     },
-    { new: true }
+    { new: true, select: "-createdAt -updatedAt " }
   );
   diaryItem.date = reverseDate(diaryItem.date);
   res.json(diaryItem);
@@ -117,7 +124,7 @@ const deleteExercisesFromDiary = async (req, res, next) => {
         exercises: { _id: itemid },
       },
     },
-    { new: true }
+    { new: true, select: "-createdAt -updatedAt " }
   );
   diaryItem.date = reverseDate(diaryItem.date);
   res.json(diaryItem);
