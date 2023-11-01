@@ -29,6 +29,10 @@
     {
       "name": "Diary",
       "description": "Diary endpoints"
+    },
+    {
+      "name": "Statistics",
+      "description": "Statistics endpoints"
     }
   ],
   "paths": {
@@ -143,6 +147,60 @@
         "responses": {
           "204": {
             "description": "User logged out successfully"
+          }
+        }
+      }
+    },
+    "/users/googlelogin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Route for login after Google authentificate",
+        "parameters": [],
+        "requestBody": {
+          "description": "User login data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string", "description": "User email" }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -755,6 +813,33 @@
           },
           "404": {
             "description": "There won't be a list of exercises, something went wrong."
+          }
+        }
+      }
+    },
+    "/stats/": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Total staistic",
+        "parameters": [],
+
+        "responses": {
+          "200": {
+            "description": "Statistics power plus",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "countOfExercises": { "type": "number" },
+                    "totalBurnedCalories": { "type": "number" },
+                    "totalExercisesTime": { "type": "number" },
+                    "userCount": { "type": "number" },
+                    "videoGuides": { "type": "number" }
+                  }
+                }
+              }
+            }
           }
         }
       }
