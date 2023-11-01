@@ -1373,7 +1373,7 @@
                 "recommend": { "type": "boolean", "example": true },
                 "_id": {
                   "type": "string",
-                  "description": "itemid in list products",
+                  "description": "itemid in this list products",
                   "example": "6540bdff1aef238df693f3eb"
                 }
               }
@@ -1387,29 +1387,52 @@
                 "bodyPart": { "type": "string", "example": "chest" },
                 "equipment": {
                   "type": "string",
-                  "example": "dairy"
+                  "example": "leverage machine"
                 },
-                "name": { "type": "string", "example": "chest" },
-                "category": {
+                "name": {
                   "type": "string",
-                  "example": "dairy"
+                  "example": "assisted chest dip (kneeling)"
                 },
                 "target": {
+                  "type": "string",
+                  "example": "pectorals"
+                },
+                "time": {
                   "type": "integer",
+                  "description": "time in second",
                   "example": 100
                 },
-                "consumeCalories": {
+                "burnedCalories": {
                   "type": "integer",
                   "example": 150
                 },
-                "recommend": { "type": "boolean", "example": true },
                 "_id": {
                   "type": "string",
-                  "description": "itemid in list products",
+                  "description": "itemid in this list exercises",
                   "example": "6540bdff1aef238df693f3eb"
                 }
               }
             }
+          },
+          "burnedCalories": {
+            "type": "integer",
+            "description": "Total burned calories",
+            "example": "3245"
+          },
+          "consumedCalories": {
+            "type": "integer",
+            "description": "Total consumed calories",
+            "example": "2345"
+          },
+          "leftExercisesTime": {
+            "type": "integer",
+            "description": "time for exercises left (min)",
+            "example": "2345"
+          },
+          "leftCalories": {
+            "type": "integer",
+            "description": "left for limit of consumed calories ",
+            "example": "2345"
           }
         }
       },

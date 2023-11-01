@@ -112,7 +112,7 @@ const diarySchema = new Schema(
             this.BMR -
             Math.round(
               this.exercises.reduce(
-                (acc, { time }) => acc + consumeCalories,
+                (acc, { consumeCalories }) => acc + consumeCalories,
                 0
               ) / 60
             )
