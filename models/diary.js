@@ -111,7 +111,7 @@ const diarySchema = new Schema(
           return (
             this.BMR -
             Math.round(
-              this.exercises.reduce(
+              this.products.reduce(
                 (acc, { consumeCalories }) => acc + consumeCalories,
                 0
               ) / 60
