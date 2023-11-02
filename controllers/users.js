@@ -197,7 +197,9 @@ const logout = async (req, res) => {
 // };
 
 const updateAvatar = async (req, res) => {
+  const { _id } = req.user;
   const avatarURL = req.file.path;
+  await User.findByIdAndUpdate(_id, { avatarURL });
   res.json({ avatarURL });
 };
 
