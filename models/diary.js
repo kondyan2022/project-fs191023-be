@@ -131,7 +131,7 @@ const getDiarySchemaParams = Joi.object({
     .pattern(
       /^(19[0-9][0-9]|20[012][0-9])(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/
     )
-    .message("Invalid data format. YYYYMMDD requered!"),
+    .message("Invalid data format. dd/mm/yyyy required!"),
 });
 
 const addProductSchema = Joi.object({
@@ -140,7 +140,7 @@ const addProductSchema = Joi.object({
     .pattern(
       /^(19[0-9][0-9]|20[012][0-9])(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/
     )
-    .message("Invalid data format. YYYYMMDD requered!")
+    .message("Invalid data format. dd/mm/yyyy required!")
     .required(),
   amount: Joi.number().min(1).required(),
   calories: Joi.number().min(1).required(),
@@ -152,7 +152,7 @@ const addExerciseSchema = Joi.object({
     .pattern(
       /^(19[0-9][0-9]|20[012][0-9])(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/
     )
-    .message("Invalid data format. YYYYMMDD requered!")
+    .message("Invalid data format. dd/mm/yyyy required!")
     .required(),
   time: Joi.number().min(1).required(),
   calories: Joi.number().min(1).required(),
