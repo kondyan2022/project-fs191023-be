@@ -151,10 +151,10 @@
         }
       }
     },
-    "/users/googlelogin": {
+    "/users/googleLogin": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Route for login after Google authentificate",
+        "summary": "Route for login after Google authentification",
         "parameters": [],
         "requestBody": {
           "description": "User login data",
@@ -295,12 +295,12 @@
     "/exercises/": {
       "get": {
         "tags": ["Exercises"],
-        "summary": "Give you list of trainings",
+        "summary": "Give you a list of trainings",
         "security": [{ "Bearer": [] }],
         "parameters": [],
         "responses": {
           "200": {
-            "description": "You got exercises list",
+            "description": "You get a list of exercises",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/ExerciseResponse" }
@@ -308,7 +308,7 @@
             }
           },
           "404": {
-            "description": "Not found",
+            "description": "Not found!",
             "content": {
               "application/json": {
                 "schema": {
@@ -320,15 +320,15 @@
         }
       }
     },
-    "/exercises/exercisegroups": {
+    "/exercises/exerciseGroups": {
       "get": {
         "tags": ["Exercises"],
-        "summary": "Give you list of filters",
+        "summary": "Give you a list of filters",
         "security": [{ "Bearer": [] }],
         "parameters": [],
         "responses": {
           "200": {
-            "description": "You are got filters list",
+            "description": "You get a list of filters",
             "content": {
               "application/json": {
                 "schema": {
@@ -338,7 +338,7 @@
             }
           },
           "404": {
-            "description": "Not found",
+            "description": "Not found!",
             "content": {
               "application/json": {
                 "schema": {
@@ -353,7 +353,7 @@
     "/exercises/search": {
       "get": {
         "tags": ["Exercises"],
-        "summary": "Give you list of trainings with filters and pagination",
+        "summary": "Give you a list of trainings with filters and pagination",
         "security": [{ "Bearer": [] }],
         "parameters": [
           {
@@ -362,19 +362,20 @@
             "description": "Filter filed name for exercise group.",
             "schema": {
               "type": "string",
+              "enum": ["Body parts", "Equipment", "Muscles"],
               "example": "equipment"
             }
           },
           {
             "in": "query",
             "name": "value",
-            "description": "Value for field specified in 'filter' parameter ",
+            "description": "Value for field specified in 'filter' parameter",
             "schema": { "type": "string", "example": "barbell" }
           },
           {
             "in": "query",
             "name": "target",
-            "description": "Value for filter by field 'target' ",
+            "description": "Value for filter by field 'target'",
             "schema": { "type": "string", "example": "lats" }
           },
           {
@@ -392,7 +393,7 @@
         ],
         "responses": {
           "200": {
-            "description": "You are got page of exercises list with pagination data",
+            "description": "You get a page of exercises with pagination data",
             "content": {
               "application/json": {
                 "schema": {
@@ -471,7 +472,7 @@
             }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found!"
           }
         }
       }
@@ -481,20 +482,20 @@
       "get": {
         "tags": ["Diary"],
         "security": [{ "Bearer": [] }],
-        "summary": "Request for get all products and exercises by selected date",
-        "description": "For getting response you must write your date in the URL in the format monthdayyear. For example: https://power-plus-service.onrender.com/diary/10242023",
+        "summary": "Request for getting of all products and exercises by selected date",
+        "description": "For getting response you must write your date in the URL in the format dd/mm/yyyy. For example: https://power-plus-service.onrender.com/diary/10242023",
         "parameters": [
           {
             "name": "date",
             "in": "path",
-            "description": "Date in the format dd/mm/yyyy  (e.g., 24/10/2023)",
+            "description": "Date in the format  dd/mm/yyyy (e.g., 24/10/2023)",
             "schema": { "type": "string" },
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "description": "You are got exercises list",
+            "description": "You get a list of exercises",
             "content": {
               "application/json": {
                 "schema": {
@@ -505,7 +506,7 @@
             }
           },
           "404": {
-            "description": "Something has gone wrong. Check if the date is entered and if you are making the request correctly."
+            "description": "Not found!"
           }
         }
       }
@@ -514,8 +515,8 @@
       "post": {
         "tags": ["Diary"],
         "security": [{ "Bearer": [] }],
-        "summary": "Request for add  product to diary for selected date",
-        "description": "Request for add  product to diary for selected date",
+        "summary": "Request for adding of product to diary for selected date",
+        "description": "Request for adding of product to diary for selected date",
         "parameters": [],
 
         "requestBody": {
@@ -531,7 +532,7 @@
         },
         "responses": {
           "200": {
-            "description": "You are got exercises list",
+            "description": "You get a list of exercises",
             "content": {
               "application/json": {
                 "schema": {
@@ -541,7 +542,7 @@
             }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found!"
           }
         }
       }
@@ -550,8 +551,8 @@
       "post": {
         "tags": ["Diary"],
         "security": [{ "Bearer": [] }],
-        "summary": "Request for add  exercise to diary for selected date",
-        "description": "Request for add exersices to diary for selected date",
+        "summary": "Request for adding exercise to diary for selected date",
+        "description": "Request for adding exercise to diary for selected date",
         "parameters": [],
 
         "requestBody": {
@@ -567,7 +568,7 @@
         },
         "responses": {
           "200": {
-            "description": "You are got exercises list",
+            "description": "You get a list of exercises",
             "content": {
               "application/json": {
                 "schema": {
@@ -577,17 +578,17 @@
             }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found!"
           }
         }
       }
     },
-    "/diary/productdelete": {
+    "/diary/productDelete": {
       "delete": {
         "tags": ["Diary"],
         "security": [{ "Bearer": [] }],
-        "summary": "Request for add  зкщвгсе to diary for selected date",
-        "description": "Request for add exersices to diary for selected date",
+        "summary": "Request for adding exercises to diary for selected date",
+        "description": "Request for adding exercises to diary for selected date",
         "parameters": [],
 
         "requestBody": {
@@ -603,7 +604,7 @@
         },
         "responses": {
           "200": {
-            "description": "You are got exercises list",
+            "description": "You get a list of exercises",
             "content": {
               "application/json": {
                 "schema": {
@@ -613,18 +614,18 @@
             }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found!"
           }
         }
       }
     },
 
-    "/diary/exercisedelete": {
+    "/diary/exerciseDelete": {
       "delete": {
         "tags": ["Diary"],
         "security": [{ "Bearer": [] }],
-        "summary": "Request for add  exercise to diary for selected date",
-        "description": "Request for add exersices to diary for selected date",
+        "summary": "Request for adding  exercise to diary for selected date",
+        "description": "Request for adding exercises to diary for selected date",
         "parameters": [],
 
         "requestBody": {
@@ -640,7 +641,7 @@
         },
         "responses": {
           "200": {
-            "description": "You are got exercises list",
+            "description": "You get a list of exercises",
             "content": {
               "application/json": {
                 "schema": {
@@ -650,7 +651,7 @@
             }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found!"
           }
         }
       }
@@ -671,7 +672,7 @@
             }
           },
           "404": {
-            "description": "Not found",
+            "description": "Not found!",
             "content": {
               "application/json": {
                 "schema": {
@@ -686,7 +687,7 @@
     "/products/categories": {
       "get": {
         "tags": ["Products"],
-        "summary": "Give you list of products",
+        "summary": "Give you a list of products",
         "security": [{ "Bearer": [] }],
         "parameters": [],
         "responses": {
@@ -701,7 +702,7 @@
             }
           },
           "404": {
-            "description": "Not found",
+            "description": "Not found!",
             "content": {
               "application/json": {
                 "schema": {
@@ -716,7 +717,7 @@
     "/products/search": {
       "get": {
         "tags": ["Products"],
-        "summary": "Give you list products with search, filters and pagination",
+        "summary": "Give you a list of products with search, filters and pagination",
         "security": [{ "Bearer": [] }],
         "parameters": [
           {
@@ -730,8 +731,11 @@
           {
             "in": "query",
             "name": "category",
-            "description": "Category for selection ",
-            "schema": { "type": "string" }
+            "description": "Category for selection",
+            "schema": { 
+              "type": "string",
+              "enum": ["alcoholic drinks", "berries", "cereals", "dairy", "dried fruits", "eggs", "fish", "flour", "fruits", "meat", "mushrooms", "nuts", "oils and fats", "poppy", "sausage", "seeds", "sesame", "soft drinks", "vegetables and herbs"]
+            }
           },
           {
             "in": "query",
@@ -742,7 +746,7 @@
           {
             "in": "query",
             "name": "page",
-            "description": "Page number ",
+            "description": "Page number",
             "schema": { "type": "number", "example": 0, "default": 0 }
           },
           {
@@ -754,7 +758,7 @@
         ],
         "responses": {
           "200": {
-            "description": "You are got page of exercises list with pagination data",
+            "description": "You get a page of exercises with pagination data",
             "content": {
               "application/json": {
                 "schema": {
@@ -819,7 +823,7 @@
             }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found!"
           }
         }
       }
@@ -831,7 +835,7 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Statistics power plus",
+            "description": "Statistics of Power Pulse",
             "content": {
               "application/json": {
                 "schema": {
@@ -861,19 +865,19 @@
         "properties": {
           "height": {
             "type": "integer",
-            "description": "user height",
+            "description": "User height",
             "minimum": 150,
             "example": 170
           },
           "currentWeight": {
             "type": "integer",
-            "description": "current user weight",
+            "description": "Current weight of user",
             "minimum": 35,
             "example": 85
           },
           "desiredWeight": {
             "type": "integer",
-            "description": "current user weight",
+            "description": "Desire weight for user",
             "minimum": 35,
             "example": 70
           },
@@ -903,12 +907,12 @@
           },
           "DSN": {
             "type": "integer",
-            "description": "Time for exercises per day ",
+            "description": "Time for exercises per day",
             "example": 110
           },
           "BMR": {
             "type": "integer",
-            "description": "calories intake limit",
+            "description": "Calories intake limit",
             "example": 4832
           }
         }
@@ -1038,19 +1042,19 @@
                 "properties": {
                   "height": {
                     "type": "integer",
-                    "description": "user height",
+                    "description": "User height",
                     "minimum": 150,
                     "example": 170
                   },
                   "currentWeight": {
                     "type": "integer",
-                    "description": "current user weight",
+                    "description": "Current weight of user",
                     "minimum": 35,
                     "example": 85
                   },
                   "desiredWeight": {
                     "type": "integer",
-                    "description": "current user weight",
+                    "description": "Desire weight for user",
                     "minimum": 35,
                     "example": 70
                   },
@@ -1085,7 +1089,7 @@
                   },
                   "BMR": {
                     "type": "integer",
-                    "description": "calories intake limit",
+                    "description": "Calories intake limit",
                     "example": 4832
                   }
                 }
@@ -1093,7 +1097,6 @@
             }
           }
         },
-
         "example": {
           "token": "sdfhwry948efwefwef......",
           "user": {
@@ -1144,19 +1147,19 @@
             "properties": {
               "height": {
                 "type": "integer",
-                "description": "user height",
+                "description": "User height",
                 "minimum": 150,
                 "example": 170
               },
               "currentWeight": {
                 "type": "integer",
-                "description": "current user weight",
+                "description": "Current weight of user",
                 "minimum": 35,
                 "example": 85
               },
               "desiredWeight": {
                 "type": "integer",
-                "description": "current user weight",
+                "description": "Desire weight for user",
                 "minimum": 35,
                 "example": 70
               },
@@ -1191,7 +1194,7 @@
               },
               "BMR": {
                 "type": "integer",
-                "description": "calories intake limit",
+                "description": "Calories intake limit",
                 "example": 4832
               }
             }
@@ -1214,19 +1217,19 @@
             "properties": {
               "height": {
                 "type": "integer",
-                "description": "user height",
+                "description": "User height",
                 "minimum": 150,
                 "example": 170
               },
               "currentWeight": {
                 "type": "integer",
-                "description": "current user weight",
+                "description": "Current weight of user",
                 "minimum": 35,
                 "example": 85
               },
               "desiredWeight": {
                 "type": "integer",
-                "description": "current user weight",
+                "description": "Desire weight for user",
                 "minimum": 35,
                 "example": 70
               },
@@ -1372,7 +1375,7 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "Title of products list",
+            "description": "Title of product list",
             "example": "alcoholic drinks"
           }
         }
@@ -1383,7 +1386,7 @@
         "properties": {
           "product": {
             "type": "string",
-            "description": "product ID id from collection",
+            "description": "Product ID from collection of products for diary",
             "example": "5d51694902b2373622ff5773"
           },
           "date": {
@@ -1391,14 +1394,14 @@
             "description": "Data in format dd/mm/yyyy (e.g. 26/10/2023) || date",
             "example": "26/10/2023"
           },
-          "ammount": {
+          "amount": {
             "type": "integer",
-            "description": "Product weight in gram ",
+            "description": "Product weight in gram for diary",
             "example": "100"
           },
           "calories": {
             "type": "integer",
-            "description": "Consumed calories",
+            "description": "Consumed calories for diary",
             "example": "345"
           }
         }
@@ -1409,7 +1412,7 @@
         "properties": {
           "exercise": {
             "type": "string",
-            "description": "exercise ID id from collection",
+            "description": "Exercise ID from collection of exercise for diary",
             "example": "5d51694902b2373622ff5773"
           },
           "date": {
@@ -1419,23 +1422,23 @@
           },
           "time": {
             "type": "integer",
-            "description": "Product weight in gram ",
+            "description": "Time of exercise for diary",
             "example": "180"
           },
           "calories": {
             "type": "integer",
-            "description": "Consumed calories",
+            "description": "Consumed calories for diary",
             "example": "333"
           }
         }
       },
       "DeleteItemFromDiaryRequest": {
         "type": "object",
-        "required": ["itemid", "date"],
+        "required": ["itemId", "date"],
         "properties": {
-          "itemid": {
+          "itemId": {
             "type": "string",
-            "description": "element id from collection",
+            "description": "Element Id from collection",
             "example": "5d51694902b2373622ff5773"
           },
           "date": {
@@ -1454,7 +1457,7 @@
           "DSN",
           "BMR",
           "products",
-          "exercices",
+          "exercises",
           "burnedCalories",
           "consumedCalories",
           "leftExercisesTime",
@@ -1474,12 +1477,12 @@
 
           "date": {
             "type": "string",
-            "description": "Data in format dd/mm/yyyy (e.g. 26/10/2023",
+            "description": "Data in format dd/mm/yyyy (e.g. 26/10/2023)",
             "example": "26/10/2023"
           },
           "DSN": {
             "type": "integer",
-            "description": "Day sport time minimum in min. ",
+            "description": "Sport time minimum in min. ",
             "example": "110"
           },
           "BMR": {
@@ -1508,13 +1511,13 @@
                 "recommend": { "type": "boolean", "example": true },
                 "_id": {
                   "type": "string",
-                  "description": "itemid in this list products",
+                  "description": "ItemId in this list of products",
                   "example": "6540bdff1aef238df693f3eb"
                 }
               }
             }
           },
-          "exercices": {
+          "exercises": {
             "type": "array",
             "items": {
               "type": "object",
@@ -1534,7 +1537,7 @@
                 },
                 "time": {
                   "type": "integer",
-                  "description": "time in second",
+                  "description": "Time in second",
                   "example": 100
                 },
                 "burnedCalories": {
@@ -1543,7 +1546,7 @@
                 },
                 "_id": {
                   "type": "string",
-                  "description": "itemid in this list exercises",
+                  "description": "ItemId in this list of exercises",
                   "example": "6540bdff1aef238df693f3eb"
                 }
               }
@@ -1561,12 +1564,12 @@
           },
           "leftExercisesTime": {
             "type": "integer",
-            "description": "time for exercises left (min)",
+            "description": "Time for exercises left (min)",
             "example": "2345"
           },
           "leftCalories": {
             "type": "integer",
-            "description": "left for limit of consumed calories ",
+            "description": "Left for limit of consumed calories ",
             "example": "2345"
           }
         }
