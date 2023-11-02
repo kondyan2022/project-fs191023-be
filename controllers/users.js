@@ -56,7 +56,12 @@ const registration = async (req, res) => {
 
   res.status(201).json({
     token,
-    user: { name: newUser.name, email: newUser.email, avatarURL },
+    user: {
+      name: newUser.name,
+      email: newUser.email,
+      avatarURL,
+      createdAt: newUser.createdAt,
+    },
   });
 };
 
@@ -83,7 +88,7 @@ const login = async (req, res) => {
     {
       new: true,
       select:
-        "-createdAt -updatedAt -password -token -verify -verificationToken -googleRedirected",
+        "-updatedAt -password -token -verify -verificationToken -googleRedirected",
     }
   );
   res.json({
@@ -108,7 +113,7 @@ const googleLogin = async (req, res) => {
     {
       new: true,
       select:
-        "-createdAt -updatedAt -password -token -verify -verificationToken -googleRedirected",
+        "-updatedAt -password -token -verify -verificationToken -googleRedirected",
     }
   );
   res.json({
@@ -155,8 +160,8 @@ const sendVerificationToken = async (req, res) => {
 };
 
 const getCurrent = (req, res) => {
-  const { _id, name, email, avatarURL, profile } = req.user;
-  res.json({ _id, name, email, avatarURL, profile });
+  const { _id, name, email, avatarURL, profile, createdAt } = req.user;
+  res.json({ _id, name, email, avatarURL, profile, createdAt });
 };
 
 const logout = async (req, res) => {
@@ -201,7 +206,7 @@ const updateProfile = async (req, res) => {
   const user = await User.findByIdAndUpdate(_id, req.body, {
     new: true,
     select:
-      "-createdAt -updatedAt -password -token -verify -verificationToken -googleRedirected",
+      "-updatedAt -password -token -verify -verificationToken -googleRedirected",
   });
   res.json(user);
 };
@@ -218,7 +223,7 @@ const googleAuth = async (req, res, next) => {
     access_type: "offline",
     prompt: "consent",
   });
-    return res.redirect(
+  return res.redirect(
     `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
   );
 };
