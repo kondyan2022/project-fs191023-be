@@ -21,7 +21,7 @@ router.get(
 );
 router.post(
   "/exercise",
-  validateAndConvertDateBody,
+  validateAndConvertDateBody("date"),
   authentificate,
   isUserHaveProfile,
   validateBody(schemas.addExerciseSchema),
@@ -29,7 +29,7 @@ router.post(
 );
 router.post(
   "/product",
-  validateAndConvertDateBody,
+  validateAndConvertDateBody("date"),
   authentificate,
   isUserHaveProfile,
   validateBody(schemas.addProductSchema),
@@ -37,7 +37,7 @@ router.post(
 );
 router.delete(
   "/product",
-  validateAndConvertDateBody,
+  validateAndConvertDateBody("date"),
   authentificate,
   isUserHaveProfile,
   ctrl.deleteProductsFromDiary
@@ -45,7 +45,7 @@ router.delete(
 
 router.delete(
   "/exercise",
-  validateAndConvertDateBody,
+  validateAndConvertDateBody("date"),
   authentificate,
   isUserHaveProfile,
   ctrl.deleteExercisesFromDiary
