@@ -292,34 +292,7 @@
         }
       }
     },
-    "/exercises/": {
-      "get": {
-        "tags": ["Exercises"],
-        "summary": "Give you a list of trainings",
-        "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "You get a list of exercises",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ExerciseResponse" }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found!",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
+
     "/exercises/exerciseGroups": {
       "get": {
         "tags": ["Exercises"],
@@ -656,34 +629,6 @@
         }
       }
     },
-    "/products/": {
-      "get": {
-        "tags": ["Products"],
-        "summary": "Give you products",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-        "responses": {
-          "200": {
-            "description": "You get products",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ProductsResponse" }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found!",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/products/categories": {
       "get": {
         "tags": ["Products"],
@@ -732,9 +677,29 @@
             "in": "query",
             "name": "category",
             "description": "Category for selection",
-            "schema": { 
+            "schema": {
               "type": "string",
-              "enum": ["alcoholic drinks", "berries", "cereals", "dairy", "dried fruits", "eggs", "fish", "flour", "fruits", "meat", "mushrooms", "nuts", "oils and fats", "poppy", "sausage", "seeds", "sesame", "soft drinks", "vegetables and herbs"]
+              "enum": [
+                "alcoholic drinks",
+                "berries",
+                "cereals",
+                "dairy",
+                "dried fruits",
+                "eggs",
+                "fish",
+                "flour",
+                "fruits",
+                "meat",
+                "mushrooms",
+                "nuts",
+                "oils and fats",
+                "poppy",
+                "sausage",
+                "seeds",
+                "sesame",
+                "soft drinks",
+                "vegetables and herbs"
+              ]
             }
           },
           {
