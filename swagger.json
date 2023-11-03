@@ -1362,22 +1362,6 @@
           }
         }
       },
-      "DeleteItemFromDiaryRequest": {
-        "type": "object",
-        "required": ["itemId", "date"],
-        "properties": {
-          "itemId": {
-            "type": "string",
-            "description": "Element Id from collection",
-            "example": "5d51694902b2373622ff5773"
-          },
-          "date": {
-            "type": "string",
-            "description": "Data in format dd/mm/yyyy (e.g. 26/10/2023) || date",
-            "example": "26/10/2023"
-          }
-        }
-      },
       "ItemDeleteFromDiaryRequest": {
         "type": "object",
         "required": ["itemId", "date", "tablename"],
