@@ -130,6 +130,29 @@ const deleteExercisesFromDiary = async (req, res, next) => {
   res.json(diaryItem);
 };
 
+const deleteFromDiary = async (req, res, next) => {
+  const { _id } = req.user;
+  const { date, itemid, tablename } = req.body;
+
+  let diaryItem = await Diary.findOne({ date, owner: _id });
+
+  if (!diaryItem) {
+    throw HttpError(404, "Diary not found");
+  }
+  console.log({ date, itemid, tablename });
+  diaryItem = await Diary.findByIdAndUpdate(
+    diaryItem._id,
+    {
+      $pull: {
+        [tablename]: { _id: itemid },
+      },
+    },
+    { new: true, select: "-createdAt -updatedAt " }
+  );
+  diaryItem.date = reverseDate(diaryItem.date);
+  res.json(diaryItem);
+};
+
 const diaryByDate = async (req, res) => {
   const {
     _id,
@@ -162,4 +185,5 @@ module.exports = {
   diaryByDate: ctrlWrapper(diaryByDate),
   deleteProductsFromDiary: ctrlWrapper(deleteProductsFromDiary),
   deleteExercisesFromDiary: ctrlWrapper(deleteExercisesFromDiary),
+  deleteFromDiary: ctrlWrapper(deleteFromDiary),
 };

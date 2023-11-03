@@ -556,12 +556,13 @@
         }
       }
     },
-    "/diary/productDelete": {
+
+    "/diary/item": {
       "delete": {
         "tags": ["Diary"],
         "security": [{ "Bearer": [] }],
-        "summary": "Request for adding exercises to diary for selected date",
-        "description": "Request for adding exercises to diary for selected date",
+        "summary": "Request for delete exercise  or product item  from diary for selected date",
+        "description": "Request for delete exercise  or product item  from diary for selected date",
         "parameters": [],
 
         "requestBody": {
@@ -570,7 +571,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DeleteItemFromDiaryRequest"
+                "$ref": "#/components/schemas/ItemDeleteFromDiaryRequest"
               }
             }
           }
@@ -593,42 +594,6 @@
       }
     },
 
-    "/diary/exerciseDelete": {
-      "delete": {
-        "tags": ["Diary"],
-        "security": [{ "Bearer": [] }],
-        "summary": "Request for adding  exercise to diary for selected date",
-        "description": "Request for adding exercises to diary for selected date",
-        "parameters": [],
-
-        "requestBody": {
-          "description": " ",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteItemFromDiaryRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "You get a list of exercises",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DiaryResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found!"
-          }
-        }
-      }
-    },
     "/products/categories": {
       "get": {
         "tags": ["Products"],
@@ -1410,6 +1375,28 @@
             "type": "string",
             "description": "Data in format dd/mm/yyyy (e.g. 26/10/2023) || date",
             "example": "26/10/2023"
+          }
+        }
+      },
+      "ItemDeleteFromDiaryRequest": {
+        "type": "object",
+        "required": ["itemId", "date", "tablename"],
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "description": "Element Id from collection",
+            "example": "5d51694902b2373622ff5773"
+          },
+          "date": {
+            "type": "string",
+            "description": "Data in format dd/mm/yyyy (e.g. 26/10/2023) || date",
+            "example": "26/10/2023"
+          },
+          "tablename": {
+            "type": "string",
+            "enum": ["products", "exercises"],
+            "example": "products",
+            "description": "Table name where item will delete"
           }
         }
       },

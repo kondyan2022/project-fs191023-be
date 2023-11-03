@@ -158,10 +158,22 @@ const addExerciseSchema = Joi.object({
   calories: Joi.number().min(1).required(),
 });
 
+const deleteSchema = Joi.object({
+  itemid: Joi.string().required(),
+  tablename: Joi.string().valid("products", "exercises").required(),
+  date: Joi.string()
+    .pattern(
+      /^(19[0-9][0-9]|20[012][0-9])(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/
+    )
+    .message("Invalid data format. YYYYMMDD required!")
+    .required(),
+});
+
 const schemas = {
   getDiarySchemaParams,
   addProductSchema,
   addExerciseSchema,
+  deleteSchema,
 };
 
 module.exports = { Diary, schemas };

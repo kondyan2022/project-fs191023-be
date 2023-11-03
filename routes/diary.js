@@ -51,4 +51,13 @@ router.delete(
   ctrl.deleteExercisesFromDiary
 );
 
+router.delete(
+  "/item",
+  validateAndConvertDateBody("date"),
+  authentificate,
+  isUserHaveProfile,
+  validateBody(schemas.deleteSchema),
+  ctrl.deleteFromDiary
+);
+
 module.exports = router;

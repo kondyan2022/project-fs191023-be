@@ -179,7 +179,7 @@ const updateSchema = Joi.object({
         return true;
       }),
     blood: Joi.number().valid(1, 2, 3, 4).required(),
-    sex: Joi.number().valid("male", "female").required(),
+    sex: Joi.string().valid("male", "female").required(),
     levelActivity: Joi.number().valid(1, 2, 3, 4, 5).required(),
   }),
 });
